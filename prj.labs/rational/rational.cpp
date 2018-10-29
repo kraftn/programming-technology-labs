@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "rational.h"
 
 Rational::Rational(const int32_t numerator)
@@ -6,30 +7,30 @@ Rational::Rational(const int32_t numerator)
 
 Rational::Rational(const int32_t numerator, const int32_t denominator){
 	if (0 == denominator) throw std::invalid_argument("Zero denumenator in Rational");
-	num = numerator;
-	denom = denominator;
-	if (denom < 0) {
-		denom *= -1;
-		num *= -1;
+	num_ = numerator;
+	denom_ = denominator;
+	if (denom_ < 0) {
+		denom_ *= -1;
+		num_ *= -1;
 	}
 	tryReduce();
 }
 
 Rational& Rational::operator=(const Rational& obj) {
 	if (this != &obj) {
-		num = obj.num;
-		denom = obj.denom;
+		num_ = obj.num_;
+		denom_ = obj.denom_;
 	}
 	return *this;
 }
 
 bool Rational::operator==(const Rational& rhs) const {
-	return (num == rhs.num)&&(denom == rhs.denom);
+	return (num_ == rhs.num_)&&(denom_ == rhs.denom_);
 }
 
 Rational& Rational::operator+=(const Rational& rhs) {
-	num = (rhs.denom * num + denom * rhs.num)/nod(denom, rhs.denom);
-	denom = nok(denom, rhs.denom);
+	num_ = (rhs.denom_ * num_ + denom_ * rhs.num_)/nod(denom_, rhs.denom_);
+	denom_ = nok(denom_, rhs.denom_);
 	tryReduce();
 	return *this;
 }
@@ -41,8 +42,8 @@ Rational operator+(const Rational& lhs, const Rational& rhs) {
 }
 
 Rational& Rational::operator-=(const Rational& rhs) {
-	num = (rhs.denom * num - denom * rhs.num) / nod(denom, rhs.denom);
-	denom = nok(denom, rhs.denom);
+	num_ = (rhs.denom_ * num_ - denom_ * rhs.num_) / nod(denom_, rhs.denom_);
+	denom_ = nok(denom_, rhs.denom_);
 	tryReduce();
 	return *this;
 }
@@ -54,8 +55,8 @@ Rational operator-(const Rational& lhs, const Rational& rhs) {
 }
 
 Rational& Rational::operator*=(const Rational& rhs) {
-	num *= rhs.num;
-	denom *= rhs.denom;
+	num_ *= rhs.num_;
+	denom_ *= rhs.denom_;
 	tryReduce();
 	return *this;
 }
@@ -67,11 +68,11 @@ Rational operator*(const Rational& lhs, const Rational& rhs) {
 }
 
 Rational& Rational::operator/=(const Rational& rhs) {
-	num *= rhs.denom;
-	denom *= rhs.num;
-	if (denom < 0) {
-		denom *= -1;
-		num *= -1;
+	num_ *= rhs.denom_;
+	denom_ *= rhs.num_;
+	if (denom_ < 0) {
+		denom_ *= -1;
+		num_ *= -1;
 	}
 	tryReduce();
 	return *this;
@@ -84,7 +85,7 @@ Rational operator/(const Rational& lhs, const Rational& rhs) {
 }
 
 std::ostream& Rational::writeTo(std::ostream& ostrm) const {
-	ostrm << leftBrace << num << separator << denom << rightBrace;
+	ostrm << leftBrace_ << num_ << separator_ << denom_ << rightBrace_;
 	return ostrm;
 }
 
@@ -96,14 +97,14 @@ std::istream& Rational::readFrom(std::istream& istrm) {
 	char rightBrace(0);
 	istrm >> leftBrace >> numerator >> sep >> denominator >> rightBrace;
 	if (istrm.good()) {
-		if ((Rational::leftBrace == leftBrace) && (Rational::separator == sep) &&
-			(Rational::rightBrace == rightBrace)) {
+		if ((Rational::leftBrace_ == leftBrace) && (Rational::separator_ == sep) &&
+			(Rational::rightBrace_ == rightBrace)) {
 			if (0 == denominator) throw std::invalid_argument("Zero denumenator in Rational");
-			num = numerator;
-			denom = denominator;
-			if (denom < 0) {
-				denom *= -1;
-				num *= -1;
+			num_ = numerator;
+			denom_ = denominator;
+			if (denom_ < 0) {
+				denom_ *= -1;
+				num_ *= -1;
 			}
 			tryReduce();
 		}
@@ -134,9 +135,9 @@ int32_t Rational::nok(int32_t num1, int32_t num2) {
 }
 
 void Rational::tryReduce() {
-	int32_t nod1 = nod(abs(num), denom);
+	int32_t nod1 = nod(abs(num_), denom_);
 	if (nod1 != 1) {
-		num /= nod1;
-		denom /= nod1;
+		num_ /= nod1;
+		denom_ /= nod1;
 	}
 }

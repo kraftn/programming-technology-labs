@@ -1,4 +1,5 @@
 #include <sstream>
+#include <stdexcept>
 #include "rational.h"
 
 bool testParse(const std::string& str) {

@@ -27,12 +27,12 @@ public:
 	void tryReduce();
 
 private:
-	int32_t num{ 0 };
-	int32_t denom{ 1 };
+	int32_t num_{ 0 };
+	int32_t denom_{ 1 };
 
-	static const char leftBrace{ '(' };
-	static const char separator{ '/' };
-	static const char rightBrace{ ')' };
+	static const char leftBrace_{ '(' };
+	static const char separator_{ '/' };
+	static const char rightBrace_{ ')' };
 };
 
 Rational operator+(const Rational& lhs, const Rational& rhs);
