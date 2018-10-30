@@ -9,7 +9,7 @@ int main() {
 	cout << "Matrix x(3,4) before filling:" << endl;
 	for (int i = 0; i < x.GetSize1(); i++) {
 		for (int j = 0; j < x.GetSize2(); j++) {
-			cout << x.data_[i][j] << " ";
+			cout << x.Value(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -18,13 +18,13 @@ int main() {
 
 	for (int i = 0; i < x.GetSize1(); i++) {
 		for (int j = 0; j < x.GetSize2(); j++) {
-			x.data_[i][j]=i*j;
+			x.Value(i, j) =i*j;
 		}
 	}
 	cout << "Matrix x(3,4) after filling:" << endl;
 	for (int i = 0; i < x.GetSize1(); i++) {
 		for (int j = 0; j < x.GetSize2(); j++) {
-			cout << x.data_[i][j] << " ";
+			cout << x.Value(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -34,7 +34,7 @@ int main() {
 	cout << "Matrix y(x):" << endl;
 	for (int i = 0; i < y.GetSize1(); i++) {
 		for (int j = 0; j < y.GetSize2(); j++) {
-			cout << y.data_[i][j] << " ";
+			cout << y.Value(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -43,13 +43,13 @@ int main() {
 	Matrix z(3,4);
 	for (int i = 0; i < z.GetSize1(); i++) {
 		for (int j = 0; j < z.GetSize2(); j++) {
-			z.data_[i][j] = i;
+			z.Value(i, j) = i;
 		}
 	}
 	cout << "Matrix z(3,4):" << endl;
 	for (int i = 0; i < z.GetSize1(); i++) {
 		for (int j = 0; j < z.GetSize2(); j++) {
-			cout << z.data_[i][j] << " ";
+			cout << z.Value(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -59,7 +59,7 @@ int main() {
 	cout << "Matrix x after x=z:" << endl;
 	for (int i = 0; i < x.GetSize1(); i++) {
 		for (int j = 0; j < x.GetSize2(); j++) {
-			cout << x.data_[i][j] << " ";
+			cout << x.Value(i, j) << " ";
 		}
 		cout << endl;
 	}
@@ -77,6 +77,12 @@ int main() {
 	}
 	catch (const invalid_argument& except) {
 		cout << "Matrix v has 3x5 sizes. v=x is failed" << endl;
+	}
+	try {
+		int32_t t = x.Value(-1,-4);
+	}
+	catch (const out_of_range& except) {
+		cout << "Trying to get x.Value(-1,-4) is failed" << endl;
 	}
 
 	return 0;

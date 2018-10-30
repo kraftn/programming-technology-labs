@@ -57,3 +57,8 @@ int Matrix::GetSize1()const {
 int Matrix::GetSize2()const {
 	return size2_;
 }
+
+int& Matrix::Value(const int i, const int j) {
+	if (i < 0 || i >= size1_ || j<0 || j>= size2_)throw std::out_of_range("Index is out of range of Matrix");
+	return data_[i][j];
+}

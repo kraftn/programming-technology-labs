@@ -12,9 +12,10 @@ public:
 	~Matrix();
 	int GetSize1() const;
 	int GetSize2() const;
-	int32_t** data_{ nullptr };
+	int& Value(const int i, const int j);
 
-public:
+private:
+	int32_t** data_{ nullptr };
 	int32_t size1_{ 0 };
 	int32_t size2_{ 0 };
 };
