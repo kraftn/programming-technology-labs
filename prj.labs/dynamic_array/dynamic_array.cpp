@@ -29,7 +29,7 @@ DynamicArray& DynamicArray::operator=(const DynamicArray& obj) {
 }
 
 DynamicArray::~DynamicArray() {
-	delete data_;
+	delete[] data_;
 	data_ = nullptr;
 	size_ = 0;
 }

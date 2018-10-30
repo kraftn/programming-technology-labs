@@ -42,9 +42,9 @@ Matrix& Matrix::operator=(const Matrix& obj) {
 
 Matrix::~Matrix() {
 	for (int i = 0; i++; i < size1_) {
-		delete data_[i];
+		delete[] data_[i];
 	}
-	delete data_;
+	delete[] data_;
 	data_ = nullptr;
 	size1_ = 0;
 	size2_ = 0;
