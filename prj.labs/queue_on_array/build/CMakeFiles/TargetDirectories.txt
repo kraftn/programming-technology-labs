@@ -1,0 +1,3 @@
+C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/prj.labs/queue_on_array/build/CMakeFiles/queue_on_array.dir
+C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/prj.labs/queue_on_array/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/prj.labs/queue_on_array/build/CMakeFiles/ZERO_CHECK.dir

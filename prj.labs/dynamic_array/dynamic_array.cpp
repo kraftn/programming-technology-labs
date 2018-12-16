@@ -1,15 +1,16 @@
 #include <stdexcept>
 #include "dynamic_array.h"
 
-DynamicArray::DynamicArray(const int32_t size) {
-	if (size <= 0) throw std::invalid_argument("Negative or null size in DynamicArray");
-	size_ = size;
-	data_ = new int[size_] {0};
+DynamicArray::DynamicArray(const int32_t size) 
+ : size_(size) {
+	if (size_ < 0) {
+		throw std::invalid_argument("Negative size in DynamicArray");
+	}
+	data_ = new int[size_]{0};
 }
 
-DynamicArray::DynamicArray(const DynamicArray& obj) {
-	if (obj.data_ == nullptr)throw std::invalid_argument("Empty DynamicArray in constructor");
-	size_ = obj.size_;
+DynamicArray::DynamicArray(const DynamicArray& obj) 
+ : size_(obj.size_) {
 	data_ = new int[size_] {0};
 	for (int i = 0; i < size_; i++) {
 		data_[i] = obj.data_[i];

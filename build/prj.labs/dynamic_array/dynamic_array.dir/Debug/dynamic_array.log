@@ -1,0 +1,10 @@
+﻿  Building Custom Rule C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/prj.labs/dynamic_array/CMakeLists.txt
+  CMake does not need to re-run because C:/Users/╨║╤А╨░╤Д╤В/Documents/My_documents/C++/╨Ы╨░╨▒╤Л/SVN/build/prj.labs/dynamic_array/CMakeFiles/generate.stamp is up-to-date.
+  dynamic_array.cpp
+  dynamic_array_test.cpp
+C:\Users\крафт\Documents\My_documents\C++\Лабы\SVN\prj.labs\dynamic_array\dynamic_array_test.cpp(51): warning C4101: 'except': unreferenced local variable
+C:\Users\крафт\Documents\My_documents\C++\Лабы\SVN\prj.labs\dynamic_array\dynamic_array_test.cpp(57): warning C4101: 'except': unreferenced local variable
+C:\Users\крафт\Documents\My_documents\C++\Лабы\SVN\prj.labs\dynamic_array\dynamic_array_test.cpp(64): warning C4101: 'except': unreferenced local variable
+  Generating Code...
+  dynamic_array.vcxproj -> C:\Users\крафт\Documents\My_documents\C++\Лабы\SVN\bin.win32.vc2015.dbg\dynamic_array.exe
+  dynamic_array.vcxproj -> C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/bin.win32.vc2015.dbg/dynamic_array.pdb (Full PDB)

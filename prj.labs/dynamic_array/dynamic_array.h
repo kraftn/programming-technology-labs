@@ -7,11 +7,13 @@ class DynamicArray {
 public:
 	DynamicArray(){}
 	explicit DynamicArray(const int32_t size);
-	explicit DynamicArray(const DynamicArray& obj);
+	DynamicArray(const DynamicArray& obj);
 	DynamicArray& operator=(const DynamicArray& obj);
 	~DynamicArray();
 	int Size() const;
-	int& operator[] (const int i);
+	int& operator[] (const int number);
+	int operator[] (const int number) const;
+	void Resize();
 
 private:
 	int32_t* data_{ nullptr };

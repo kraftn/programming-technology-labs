@@ -13,7 +13,7 @@ int main() {
 	cout << "Size of x: " << x.Size() << endl << endl;
 
 	for (int i = 0; i < x.Size(); i++) {
-		x[i] = i*i;
+		x[i] = i * i;
 	}
 	cout << "DynamicArray x(5) after filling:" << endl;
 	for (int i = 0; i < x.Size(); i++) {
@@ -47,14 +47,12 @@ int main() {
 
 	try {
 		DynamicArray t(-1);
-	}
-	catch (const invalid_argument& except) {
+	} catch (const invalid_argument& except) {
 		cout << "Trying to create DynamicArray t(-1) is failed" << endl;
 	}
 	try {
-		int32_t t=x[-2];
-	}
-	catch (const out_of_range& except) {
+		int32_t t(x[-2]);
+	} catch (const out_of_range& except) {
 		cout << "Trying to get x[-2] is failed" << endl;
 	}
 	DynamicArray v(6);

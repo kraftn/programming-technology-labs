@@ -6,7 +6,7 @@
 class Matrix {
 public:
 	Matrix() {}
-	explicit Matrix(const int32_t size1, const int32_t size2);
+	Matrix(const int32_t size1, const int32_t size2);
 	explicit Matrix(const Matrix& obj);
 	Matrix& operator=(const Matrix& obj);
 	~Matrix();
