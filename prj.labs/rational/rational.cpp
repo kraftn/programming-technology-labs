@@ -1,4 +1,4 @@
-#include <stdexcept>
+﻿#include <stdexcept>
 #include "rational.h"
 
 Rational::Rational(const int32_t numerator)
@@ -137,8 +137,7 @@ std::istream& Rational::readFrom(std::istream& istrm) {
         num_ *= -1;
       }
       tryReduce();
-    }
-    else {
+    } else {
       istrm.setstate(std::ios_base::failbit);
     }
   }

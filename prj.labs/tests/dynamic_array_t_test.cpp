@@ -1,5 +1,6 @@
-#include <iostream>
+﻿#include <iostream>
 #include <stdexcept>
+
 #include "dynamic_array_t/dynamic_array_t.h"
 
 int main() {
@@ -8,7 +9,8 @@ int main() {
   DynamicArrayT<int32_t> dynamic_array;
   cout << "DynamicArray dynamic_array is " << dynamic_array << endl;
   cout << "Size of dynamic_array: " << dynamic_array.Size() << endl;
-  cout << "Capacity of dynamic_array: " << dynamic_array.Capacity() << endl << endl;
+  cout << "Capacity of dynamic_array: " << dynamic_array.Capacity()
+       << endl << endl;
 
   DynamicArrayT<int32_t> x(5);
   cout << "DynamicArray x(5) before filling is " << x << endl;
@@ -82,12 +84,14 @@ int main() {
     cout << "Trying to set y[5] to 50 is failed" << endl;
   }
 
-  cout << "-------------------------------------------------------------------------------------" << endl;
+  cout << "---------------------------------------------------------------"
+       << endl;
 
   DynamicArrayT<double> dynamic_array_new;
   cout << "DynamicArray dynamic_array_new is " << dynamic_array_new << endl;
   cout << "Size of dynamic_array_new: " << dynamic_array_new.Size() << endl;
-  cout << "Capacity of dynamic_array_new: " << dynamic_array_new.Capacity() << endl << endl;
+  cout << "Capacity of dynamic_array_new: " << dynamic_array_new.Capacity() <<
+       endl << endl;
 
   DynamicArrayT<double> x_new(5);
   cout << "DynamicArray x_new(5) before filling is " << x_new << endl;
@@ -110,10 +114,12 @@ int main() {
 
 
   x_new = z_new;
-  cout << "DynamicArray x after x_new=z_new is " << x_new << endl << endl;
+  cout << "DynamicArray x after x_new=z_new is " << x_new << endl
+       << endl;
 
   x_new = z_new = y_new;
-  cout << "DynamicArray x_new after x_new=z_new=y_new is " << x_new << endl << endl;
+  cout << "DynamicArray x_new after x_new=z_new=y_new is " << x_new << endl <<
+       endl;
 
   x_new = x_new;
   cout << "DynamicArray x_new after x_new=x_new is " << x_new << endl << endl;

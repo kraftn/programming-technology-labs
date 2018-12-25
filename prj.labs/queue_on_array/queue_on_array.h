@@ -1,4 +1,4 @@
-#ifndef QUEUE_ON_ARRAY
+﻿#ifndef QUEUE_ON_ARRAY
 #define QUEUE_ON_ARRAY
 
 #include <cstdint>

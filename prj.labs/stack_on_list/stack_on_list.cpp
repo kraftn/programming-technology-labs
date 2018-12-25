@@ -1,4 +1,4 @@
-#include <stdexcept>
+﻿#include <stdexcept>
 #include <iostream>
 
 #include "stack_on_list.h"
@@ -27,7 +27,6 @@ StackOnList::~StackOnList() {
 StackOnList& StackOnList::operator=(const StackOnList& obj) {
   if (this != &obj) {
     if (nullptr != obj.data_) {
-
       if (nullptr != data_) {
         Node* copied_node(obj.data_);
         Node* inserted_node(data_);
@@ -44,8 +43,7 @@ StackOnList& StackOnList::operator=(const StackOnList& obj) {
             inserted_node = inserted_node->next;
             copied_node = copied_node->next;
           }
-        }
-        else {
+        } else {
           inserted_node->data = copied_node->data;
           Node* deleted_node(inserted_node->next);
           inserted_node->next = nullptr;
@@ -55,8 +53,7 @@ StackOnList& StackOnList::operator=(const StackOnList& obj) {
             delete node_delete;
           }
         }
-      }
-      else {
+      } else {
         data_ = new Node(nullptr, obj.data_->data);
         Node* copied_node(obj.data_->next);
         Node* inserted_node(data_);
@@ -66,8 +63,7 @@ StackOnList& StackOnList::operator=(const StackOnList& obj) {
           copied_node = copied_node->next;
         }
       }
-    }
-    else {
+    } else {
       data_ = nullptr;
     }
   }

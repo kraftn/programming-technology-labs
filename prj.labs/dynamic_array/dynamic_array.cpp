@@ -1,16 +1,17 @@
-#include <stdexcept>
+﻿#include <stdexcept>
 
 #include "dynamic_array.h"
 
 DynamicArray::DynamicArray(const int32_t size)
-  : logic_size_(size), real_size_(2 * logic_size_), data_(new int32_t[real_size_] {0}) {
-
+  : logic_size_(size), real_size_(2 * logic_size_),
+    data_(new int32_t[real_size_] {0}) {
 }
 
 
 
 DynamicArray::DynamicArray(const DynamicArray& obj)
-  : logic_size_(obj.logic_size_), real_size_(2 * logic_size_), data_(new int32_t[real_size_] {0}) {
+  : logic_size_(obj.logic_size_), real_size_(2 * logic_size_),
+    data_(new int32_t[real_size_] {0}) {
   for (ptrdiff_t i_data(0); i_data < obj.logic_size_; i_data += 1) {
     data_[i_data] = obj.data_[i_data];
   }
@@ -69,15 +70,13 @@ int32_t DynamicArray::operator[](const ptrdiff_t number) const {
 void DynamicArray::Resize(int32_t size) {
   if (size < 0) {
     throw std::length_error("Invalid size of DynamicArray.");
-  }
-  else {
+  } else {
     if (size <= real_size_) {
       for (ptrdiff_t i_data(logic_size_); i_data < (size - 1); i_data += 1) {
         data_[i_data] = 0;
       }
       logic_size_ = size;
-    }
-    else {
+    } else {
       int32_t* data_old = data_;
       data_ = new int32_t[2 * size] { 0 };
       for (ptrdiff_t i_data(0); i_data < logic_size_; i_data += 1) {

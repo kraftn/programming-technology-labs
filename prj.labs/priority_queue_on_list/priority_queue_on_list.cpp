@@ -1,4 +1,4 @@
-#include <stdexcept>
+﻿#include <stdexcept>
 
 #include "priority_queue_on_list.h"
 
@@ -8,7 +8,8 @@ PriorityQueueOnList::PriorityQueueOnList(const PriorityQueueOnList& obj) {
     Node* copied_node(obj.head_->next);
     Node* inserted_node(head_);
     while (nullptr != copied_node) {
-      inserted_node->next = new Node(nullptr, copied_node->value, copied_node->key);
+      inserted_node->next = new Node(nullptr, copied_node->value,
+                                     copied_node->key);
       inserted_node = inserted_node->next;
       copied_node = copied_node->next;
     }
@@ -31,7 +32,8 @@ PriorityQueueOnList& PriorityQueueOnList::operator=(const PriorityQueueOnList& o
       Node* copied_node(obj.head_->next);
       Node* inserted_node(head_);
       while (nullptr != copied_node) {
-        inserted_node->next = new Node(nullptr, copied_node->value, copied_node->key);
+        inserted_node->next = new Node(nullptr, copied_node->value,
+                                       copied_node->key);
         inserted_node = inserted_node->next;
         copied_node = copied_node->next;
       }
@@ -80,8 +82,7 @@ void PriorityQueueOnList::Push(const int32_t value, const int32_t key) {
     if (head_->key <= key) {
       Node* take(head_);
       head_ = new Node(take, value, key);
-    }
-    else {
+    } else {
       Node* inserted_node(head_);
       while (nullptr != inserted_node->next && inserted_node->next->key > key) {
         inserted_node = inserted_node->next;
@@ -89,8 +90,7 @@ void PriorityQueueOnList::Push(const int32_t value, const int32_t key) {
       Node* take = inserted_node->next;
       inserted_node->next = new Node(take, value, key);
     }
-  }
-  else {
+  } else {
     head_ = new Node(nullptr, value, key);
   }
 }

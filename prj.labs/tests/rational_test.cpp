@@ -1,4 +1,4 @@
-#include <sstream>
+﻿#include <sstream>
 #include <stdexcept>
 #include "rational/rational.h"
 
@@ -9,8 +9,7 @@ bool testParse(const std::string& str) {
   istrm >> z;
   if (istrm.good()) {
     cout << "Read success: " << str << " -> " << z << endl;
-  }
-  else {
+  } else {
     cout << "Read error : " << str << " -> " << z << endl;
   }
   return istrm.good();

@@ -1,4 +1,4 @@
-#ifndef RATIONAL_H
+﻿#ifndef RATIONAL_H
 #define RATIONAL_H
 
 #include <cstdint>
@@ -6,7 +6,7 @@
 
 class Rational {
  public:
-  Rational() {};
+  Rational() {}
   explicit Rational(const int32_t numerator);
   Rational(const int32_t numerator, const int32_t denominator);
   Rational& operator=(const Rational& obj);

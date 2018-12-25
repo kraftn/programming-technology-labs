@@ -1,10 +1,9 @@
-#include "priority_queue_on_list/priority_queue_on_list.h"
+﻿#include "priority_queue_on_list/priority_queue_on_list.h"
 
 #include <iostream>
 #include <cstdint>
 
 int main() {
-
   PriorityQueueOnList queue;
   std::cout << "PriorityQueueOnList queue is " << queue << std::endl;
   std::cout << "queue.IsEmpty(): " << queue.IsEmpty() << std::endl;
@@ -21,7 +20,8 @@ int main() {
   std::cout << "Queue is " << queue_new << std::endl;
   std::cout << "Is queue empty -> " << queue_new.IsEmpty() << std::endl;
 
-  std::cout << "Let's push values from " << (val + 1) << " to " << (val + 3) << " with keys from " << val + 2 << " to " << val + 4 << std::endl;
+  std::cout << "Let's push values from " << (val + 1) << " to " << (val + 3)
+            << " with keys from " << val + 2 << " to " << val + 4 << std::endl;
   queue_new.Push(val + 1, val + 2);
   queue_new.Push(val + 2, val + 3);
   queue_new.Push(val + 3, val + 4);
@@ -29,11 +29,13 @@ int main() {
   std::cout << "Top value is   -> " << queue_new.Top() << std::endl;
 
   PriorityQueueOnList x(queue_new);
-  std::cout << "Queue x, which was copied from last queue, is " << x << std::endl;
+  std::cout << "Queue x, which was copied from last queue, is " << x
+            << std::endl;
 
   PriorityQueueOnList y;
   y = x;
-  std::cout << "Queue y, which was copied from last queue using =, is " << y << std::endl;
+  std::cout << "Queue y, which was copied from last queue using =, is " << y
+            << std::endl;
 
   std::cout << "Let's pop in queue y" << std::endl;
   y.Pop();

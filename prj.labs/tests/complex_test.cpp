@@ -1,4 +1,5 @@
-#include <sstream>
+﻿#include <sstream>
+
 #include "complex/complex.h"
 
 bool testParse(const std::string& str) {
@@ -8,8 +9,7 @@ bool testParse(const std::string& str) {
   istrm >> z;
   if (istrm.good()) {
     cout << "Read success: " << str << " -> " << z << endl;
-  }
-  else {
+  } else {
     cout << "Read error : " << str << " -> " << z << endl;
   }
   return istrm.good();
@@ -30,10 +30,14 @@ int main() {
   testParse("{8.9,9");
   cout << endl;
 
-  cout << "x after x += Complex(5.0, 3.5): " << (x += Complex(5.0, 3.5)) << endl;
-  cout << "x after x -= Complex(1.0, 4.0): " << (x -= Complex(1.0, 4.0)) << endl;
-  cout << "x after x *= Complex(3.0, 2.0): " << (x *= Complex(3.0, 2.0)) << endl;
-  cout << "x after x /= Complex(1.0, -2.0): " << (x /= Complex(1.0, -2.0)) << endl << endl;
+  cout << "x after x += Complex(5.0, 3.5): "
+       << (x += Complex(5.0, 3.5)) << endl;
+  cout << "x after x -= Complex(1.0, 4.0): "
+       << (x -= Complex(1.0, 4.0)) << endl;
+  cout << "x after x *= Complex(3.0, 2.0): "
+       << (x *= Complex(3.0, 2.0)) << endl;
+  cout << "x after x /= Complex(1.0, -2.0): "
+       << (x /= Complex(1.0, -2.0)) << endl << endl;
 
   x = Complex(1.0, -3.0);
   cout << "x after x = Complex(1, -3): " << x << endl << endl;

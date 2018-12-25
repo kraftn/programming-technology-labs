@@ -1,4 +1,5 @@
-#include <stdexcept>
+﻿#include <stdexcept>
+
 #include "matrix.h"
 
 Matrix::Matrix(const int32_t size1, const int32_t size2) {

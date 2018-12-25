@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef STACK_ON_LIST
 #define STACK_ON_LIST
 

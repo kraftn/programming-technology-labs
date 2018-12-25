@@ -1,4 +1,4 @@
-#include "queue_on_array.h"
+﻿#include "queue_on_array.h"
 
 #include <iostream>
 #include <cstddef>
@@ -6,10 +6,7 @@
 #include <stdexcept>
 
 QueueOnArray::QueueOnArray()
-  : data_(new int32_t[10] {
-  0
-}), size_(10) {
-
+  : data_(new int32_t[10] {0}), size_(10) {
 }
 
 
@@ -76,8 +73,7 @@ void QueueOnArray::Pop() {
 int32_t QueueOnArray::Top() const {
   if (!IsEmpty()) {
     return data_[i_head_];
-  }
-  else {
+  } else {
     throw std::logic_error("Queue is empty.");
   }
 }

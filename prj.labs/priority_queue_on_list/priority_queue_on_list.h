@@ -1,4 +1,4 @@
-#ifndef PRIORITY_QUEUE_ON_LIST
+﻿#ifndef PRIORITY_QUEUE_ON_LIST
 #define PRIORITY_QUEUE_ON_LIST
 
 #include <cstdint>
@@ -30,7 +30,8 @@ class PriorityQueueOnList {
   Node* head_{nullptr};
 };
 
-inline std::ostream& operator<<(std::ostream& ostrm, const PriorityQueueOnList& stack) {
+inline std::ostream& operator<<(std::ostream& ostrm,
+                                const PriorityQueueOnList& stack) {
   return stack.WriteTo(ostrm);
 }
 

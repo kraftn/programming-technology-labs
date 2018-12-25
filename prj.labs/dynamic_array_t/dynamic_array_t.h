@@ -1,4 +1,4 @@
-#ifndef DYNAMIC_ARRAY_T_H
+﻿#ifndef DYNAMIC_ARRAY_T_H
 #define DYNAMIC_ARRAY_T_H
 
 #include <cstdint>
@@ -9,22 +9,22 @@
 template <typename T>
 class DynamicArrayT {
  public:
-  DynamicArrayT() = default;
-  explicit DynamicArrayT(const int32_t size);
-  DynamicArrayT(const DynamicArrayT<T>& obj);
-  DynamicArrayT<T>& operator=(const DynamicArrayT<T>& obj);
-  ~DynamicArrayT();
-  size_t Size() const;
-  size_t Capacity() const;
-  T& operator[](const ptrdiff_t number);
-  T operator[](const ptrdiff_t number) const;
-  void Resize(int32_t size);
-  std::ostream& WriteTo(std::ostream& ostrm) const;
+    DynamicArrayT() = default;
+    explicit DynamicArrayT(const int32_t size);
+    DynamicArrayT(const DynamicArrayT<T>& obj);
+    DynamicArrayT<T>& operator=(const DynamicArrayT<T>& obj);
+    ~DynamicArrayT();
+    size_t Size() const;
+    size_t Capacity() const;
+    T& operator[](const ptrdiff_t number);
+    T operator[](const ptrdiff_t number) const;
+    void Resize(int32_t size);
+    std::ostream& WriteTo(std::ostream& ostrm) const;
 
  private:
-  size_t logic_size_{ 0 };
-  size_t real_size_{ 0 };
-  T* data_{ nullptr };
+    size_t logic_size_{ 0 };
+    size_t real_size_{ 0 };
+    T* data_{ nullptr };
 };
 
 
@@ -32,7 +32,9 @@ class DynamicArrayT {
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const int32_t size)
   : logic_size_(size), real_size_(2 * logic_size_),
-  data_(new T[real_size_] {0}) {
+    data_(new T[real_size_] {
+  0
+}) {
 }
 
 

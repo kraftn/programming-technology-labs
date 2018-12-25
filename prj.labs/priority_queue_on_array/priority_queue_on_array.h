@@ -1,4 +1,4 @@
-#ifndef PRIORITY_QUEUE_ON_ARRAY
+﻿#ifndef PRIORITY_QUEUE_ON_ARRAY
 #define PRIORITY_QUEUE_ON_ARRAY
 
 #include <cstdint>
@@ -24,7 +24,8 @@ class PriorityQueueOnArray {
   ptrdiff_t i_tail_{ 0 };
 };
 
-inline std::ostream& operator<<(std::ostream& ostrm, const PriorityQueueOnArray& rhs) {
+inline std::ostream& operator<<(std::ostream& ostrm,
+                                const PriorityQueueOnArray& rhs) {
   return rhs.WriteTo(ostrm);
 }
 

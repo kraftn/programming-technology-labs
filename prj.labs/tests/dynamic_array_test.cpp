@@ -1,5 +1,6 @@
-#include <iostream>
+﻿#include <iostream>
 #include <stdexcept>
+
 #include "dynamic_array/dynamic_array.h"
 
 int main() {
@@ -8,7 +9,8 @@ int main() {
   DynamicArray dynamic_array;
   cout << "DynamicArray dynamic_array is " << dynamic_array << endl;
   cout << "Size of dynamic_array: " << dynamic_array.Size() << endl;
-  cout << "Capacity of dynamic_array: " << dynamic_array.Capacity() << endl << endl;
+  cout << "Capacity of dynamic_array: " << dynamic_array.Capacity() << endl
+       << endl;
 
   DynamicArray x(5);
   cout << "DynamicArray x(5) before filling is " << x << endl;

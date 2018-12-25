@@ -1,4 +1,4 @@
-#include "complex.h"
+﻿#include "complex.h"
 
 Complex::Complex(const double real)
   : Complex(real, 0.0) {
@@ -105,8 +105,7 @@ std::istream& Complex::readFrom(std::istream& istrm) {
         (Complex::rightBrace == rightBrace)) {
       re = real;
       im = imaganary;
-    }
-    else {
+    } else {
       istrm.setstate(std::ios_base::failbit);
     }
   }

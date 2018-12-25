@@ -1,4 +1,4 @@
-#include "priority_queue_on_array.h"
+﻿#include "priority_queue_on_array.h"
 
 #include <iostream>
 #include <cstddef>
@@ -6,15 +6,14 @@
 #include <stdexcept>
 
 PriorityQueueOnArray::PriorityQueueOnArray()
-  : values_(new int32_t[10] {0}), keys_(new int32_t[10] { 0 }), size_(10) {
-
+  : values_(new int32_t[10] {0}), keys_(new int32_t[10] {0}), size_(10) {
 }
 
 
 
 PriorityQueueOnArray::PriorityQueueOnArray(const PriorityQueueOnArray& obj)
-  : values_(new int32_t[obj.size_]), keys_(new int32_t[obj.size_]), size_(obj.size_), i_head_(obj.i_head_),
-    i_tail_(obj.i_tail_) {
+  : values_(new int32_t[obj.size_]), keys_(new int32_t[obj.size_]),
+    size_(obj.size_), i_head_(obj.i_head_), i_tail_(obj.i_tail_) {
   for (ptrdiff_t i(0); i < obj.size_; i += 1) {
     values_[i] = obj.values_[i];
     keys_[i] = obj.keys_[i];
@@ -66,8 +65,7 @@ void PriorityQueueOnArray::Push(const int32_t& value, const int32_t& key) {
     keys_[(i_replaced + 1) % size_] = keys_[i_replaced];
     if (i_replaced != 0) {
       i_replaced -= 1;
-    }
-    else {
+    } else {
       i_replaced = size_ - 1;
     }
   }
@@ -108,8 +106,7 @@ void PriorityQueueOnArray::Pop() {
 int32_t PriorityQueueOnArray::Top() const {
   if (!IsEmpty()) {
     return values_[i_head_];
-  }
-  else {
+  } else {
     throw std::logic_error("Queue is empty.");
   }
 }
