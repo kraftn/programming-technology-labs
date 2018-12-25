@@ -31,15 +31,18 @@ class DynamicArrayT {
 
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const int32_t size)
-  : logic_size_(size), real_size_(2 * logic_size_), data_(new T[real_size_]{ 0 }) {
-
+  : logic_size_(size), real_size_(2 * logic_size_),
+  data_(new T[real_size_] {0}) {
 }
 
 
 
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const DynamicArrayT<T>& obj)
-  : logic_size_(obj.logic_size_), real_size_(2 * logic_size_), data_(new T[real_size_]{ 0 }) {
+  : logic_size_(obj.logic_size_), real_size_(2 * logic_size_),
+    data_(new T[real_size_] {
+  0
+}) {
   for (ptrdiff_t i_data(0); i_data < obj.logic_size_; i_data += 1) {
     data_[i_data] = obj.data_[i_data];
   }
@@ -59,6 +62,7 @@ DynamicArrayT<T>& DynamicArrayT<T>::operator=(const DynamicArrayT<T>& obj) {
 }
 
 
+
 template<typename T>
 DynamicArrayT<T>::~DynamicArrayT() {
   delete[] data_;
@@ -70,6 +74,7 @@ template<typename T>
 size_t DynamicArrayT<T>::Capacity() const {
   return real_size_;
 }
+
 
 
 template<typename T>
@@ -88,6 +93,7 @@ T& DynamicArrayT<T>::operator[](const ptrdiff_t number) {
 }
 
 
+
 template<typename T>
 T DynamicArrayT<T>::operator[](const ptrdiff_t number) const {
   if (number < 0 || number >= logic_size_) {
@@ -102,17 +108,15 @@ template<typename T>
 void DynamicArrayT<T>::Resize(int32_t size) {
   if (size < 0) {
     throw std::length_error("Invalid size of DynamicArray.");
-  }
-  else {
+  } else {
     if (size <= real_size_) {
       for (ptrdiff_t i_data(logic_size_); i_data < (size - 1); i_data += 1) {
         data_[i_data] = 0;
       }
       logic_size_ = size;
-    }
-    else {
+    } else {
       T* data_old = data_;
-      data_ = new T[2 * size]{ 0 };
+      data_ = new T[2 * size] { 0 };
       for (ptrdiff_t i_data(0); i_data < logic_size_; i_data += 1) {
         data_[i_data] = data_old[i_data];
       }

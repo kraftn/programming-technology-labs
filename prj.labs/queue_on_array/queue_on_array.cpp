@@ -5,9 +5,10 @@
 #include <cstdint>
 #include <stdexcept>
 
-
 QueueOnArray::QueueOnArray()
-  : data_(new int32_t[10] {0}), size_(10) {
+  : data_(new int32_t[10] {
+  0
+}), size_(10) {
 
 }
 

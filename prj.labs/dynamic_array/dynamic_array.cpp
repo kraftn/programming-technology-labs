@@ -79,7 +79,7 @@ void DynamicArray::Resize(int32_t size) {
     }
     else {
       int32_t* data_old = data_;
-      data_ = new int32_t[2*size]{ 0 };
+      data_ = new int32_t[2 * size] { 0 };
       for (ptrdiff_t i_data(0); i_data < logic_size_; i_data += 1) {
         data_[i_data] = data_old[i_data];
       }

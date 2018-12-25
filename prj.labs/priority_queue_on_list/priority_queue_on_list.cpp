@@ -16,9 +16,11 @@ PriorityQueueOnList::PriorityQueueOnList(const PriorityQueueOnList& obj) {
 }
 
 
+
 PriorityQueueOnList::~PriorityQueueOnList() {
   Clear();
 }
+
 
 
 PriorityQueueOnList& PriorityQueueOnList::operator=(const PriorityQueueOnList& obj) {
@@ -39,12 +41,14 @@ PriorityQueueOnList& PriorityQueueOnList::operator=(const PriorityQueueOnList& o
 }
 
 
+
 int32_t PriorityQueueOnList::Top() const {
   if (nullptr == head_) {
     throw std::logic_error("Try get top from empty queue.");
   }
   return head_->value;
 }
+
 
 
 void PriorityQueueOnList::Pop() {
@@ -56,6 +60,7 @@ void PriorityQueueOnList::Pop() {
 }
 
 
+
 void PriorityQueueOnList::Clear() {
   while (!IsEmpty()) {
     Pop();
@@ -63,9 +68,11 @@ void PriorityQueueOnList::Clear() {
 }
 
 
+
 bool PriorityQueueOnList::IsEmpty() const  {
   return nullptr == head_;
 }
+
 
 
 void PriorityQueueOnList::Push(const int32_t value, const int32_t key) {
@@ -83,17 +90,17 @@ void PriorityQueueOnList::Push(const int32_t value, const int32_t key) {
       inserted_node->next = new Node(take, value, key);
     }
   }
-  else
-  {
+  else {
     head_ = new Node(nullptr, value, key);
   }
 }
 
 
+
 std::ostream& PriorityQueueOnList::WriteTo(std::ostream& ostrm) const {
   Node* printed_node(head_);
-  while (nullptr!=printed_node) {
-    ostrm << '{'<<printed_node->value<<", "<<printed_node->key<<"} ";
+  while (nullptr != printed_node) {
+    ostrm << '{' << printed_node->value << ", " << printed_node->key << "} ";
     printed_node = printed_node->next;
   }
   return ostrm;

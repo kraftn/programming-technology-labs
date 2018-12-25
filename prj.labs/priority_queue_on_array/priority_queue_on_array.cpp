@@ -5,11 +5,8 @@
 #include <cstdint>
 #include <stdexcept>
 
-
 PriorityQueueOnArray::PriorityQueueOnArray()
-  : values_(new int32_t[10] {
-  0
-}), keys_(new int32_t[10] { 0 }), size_(10) {
+  : values_(new int32_t[10] {0}), keys_(new int32_t[10] { 0 }), size_(10) {
 
 }
 

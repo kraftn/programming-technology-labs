@@ -1,9 +1,9 @@
-#include "stack_on_list.h"
+#include "stack_on_list/stack_on_list.h"
 
 #include <iostream>
 
 int main() {
-  
+
   StackOnList stDef;
   std::cout << "Let's create stack. Stack is " << stDef << std::endl;
   std::cout << "Is def create stack emty -> " << stDef.IsEmpty() << std::endl;
@@ -28,7 +28,7 @@ int main() {
   std::cout << "Top value is   -> " << st.Top() << std::endl;
 
   StackOnList x(st);
-  std::cout << "Stack x, which was copied from last stack, is " << x <<std::endl;
+  std::cout << "Stack x, which was copied from last stack, is " << x << std::endl;
 
   StackOnList y;
   y = x;

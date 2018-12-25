@@ -1,4 +1,4 @@
-#include "queue_on_array.h"
+#include "queue_on_array/queue_on_array.h"
 
 #include <iostream>
 #include <cstddef>
@@ -43,13 +43,13 @@ int main() {
   x = x;
   std::cout << x << std::endl;
 
-  std::cout << "x.IsEmpty(): " << x.IsEmpty()<<std::endl;
+  std::cout << "x.IsEmpty(): " << x.IsEmpty() << std::endl;
 
   std::cout << "Queue x after x.Pop() 6 times: ";
   for (ptrdiff_t i(0); i < 6; i += 1) {
     x.Pop();
   }
-  std::cout << x<<std::endl;
+  std::cout << x << std::endl;
 
   std::cout << "x.IsEmpty(): " << x.IsEmpty() << std::endl;
 
@@ -58,7 +58,7 @@ int main() {
     int32_t t = x.Top();
   }
   catch (std::logic_error excepton) {
-    std::cout << "queue is empty"<<std::endl;
+    std::cout << "queue is empty" << std::endl;
   }
 
   return 0;

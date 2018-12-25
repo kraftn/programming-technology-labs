@@ -1,2 +1,2 @@
-add_executable(complex complex.cpp complex.h complex_test.cpp)
+add_library(complex complex.h complex.cpp)
 set_property(TARGET complex PROPERTY CXX_STANDARD 14)

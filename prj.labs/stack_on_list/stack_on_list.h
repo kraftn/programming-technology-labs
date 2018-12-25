@@ -6,7 +6,7 @@
 #include <iosfwd>
 
 class StackOnList {
-public:
+ public:
   StackOnList() = default;
   StackOnList(const StackOnList& obj);
   StackOnList& operator=(const StackOnList& obj);
@@ -17,7 +17,7 @@ public:
   int Top() const;
   void Clear() noexcept;
   std::ostream& WriteTo(std::ostream& ostrm) const;
-private:
+ private:
   struct Node {
     Node* next{nullptr};
     int   data{0};
@@ -26,7 +26,7 @@ private:
       : next(p), data(v) {
     }
   };
-private:
+ private:
   Node* data_{nullptr};
 };
 

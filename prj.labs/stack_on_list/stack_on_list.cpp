@@ -17,15 +17,17 @@ StackOnList::StackOnList(const StackOnList& obj) {
 }
 
 
+
 StackOnList::~StackOnList() {
   Clear();
 }
 
 
+
 StackOnList& StackOnList::operator=(const StackOnList& obj) {
   if (this != &obj) {
     if (nullptr != obj.data_) {
-      
+
       if (nullptr != data_) {
         Node* copied_node(obj.data_);
         Node* inserted_node(data_);
@@ -73,12 +75,14 @@ StackOnList& StackOnList::operator=(const StackOnList& obj) {
 }
 
 
+
 int StackOnList::Top() const {
   if (nullptr == data_) {
     throw std::logic_error("Try get top from empty stack.");
   }
   return data_->data;
 }
+
 
 
 void StackOnList::Pop() noexcept {
@@ -90,6 +94,7 @@ void StackOnList::Pop() noexcept {
 }
 
 
+
 void StackOnList::Clear() noexcept {
   while (!IsEmpty()) {
     Pop();
@@ -97,14 +102,17 @@ void StackOnList::Clear() noexcept {
 }
 
 
+
 bool StackOnList::IsEmpty() const noexcept {
   return nullptr == data_;
 }
 
 
+
 void StackOnList::Push(const int value) {
   data_ = new Node(data_, value);
 }
+
 
 
 std::ostream& StackOnList::WriteTo(std::ostream& ostrm) const {
