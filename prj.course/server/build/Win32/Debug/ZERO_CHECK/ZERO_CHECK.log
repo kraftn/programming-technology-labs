@@ -1,9 +1,0 @@
-﻿  Checking Build System
-  CMake is re-running because C:/Users/╨║╤А╨░╤Д╤В/Documents/My_documents/C++/╨Ы╨░╨▒╤Л/SVN/prj.course/server/build/CMakeFiles/generate.stamp is out-of-date.
-    the file 'C:/Users/╨║╤А╨░╤Д╤В/Documents/My_documents/C++/╨Ы╨░╨▒╤Л/SVN/prj.course/server/CMakeLists.txt'
-    is newer than 'C:/Users/╨║╤А╨░╤Д╤В/Documents/My_documents/C++/╨Ы╨░╨▒╤Л/SVN/prj.course/server/build/CMakeFiles/generate.stamp.depend'
-    result='-1'
-  -- Selecting Windows SDK version  to target Windows 10.0.17134.
-  -- Configuring done
-  -- Generating done
-  -- Build files have been written to: C:/Users/╨║╤А╨░╤Д╤В/Documents/My_documents/C++/╨Ы╨░╨▒╤Л/SVN/prj.course/server/build

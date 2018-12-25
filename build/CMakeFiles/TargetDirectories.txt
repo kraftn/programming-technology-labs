@@ -1,6 +1,0 @@
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/CMakeFiles/ZERO_CHECK.dir
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/prj.labs/complex/CMakeFiles/complex.dir
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/prj.labs/rational/CMakeFiles/rational.dir
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/prj.labs/dynamic_array/CMakeFiles/dynamic_array.dir
-C:/Users/крафт/Documents/My_documents/C++/Лабы/SVN/build/prj.labs/matrix/CMakeFiles/matrix.dir

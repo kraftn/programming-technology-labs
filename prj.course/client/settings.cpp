@@ -1,7 +1,9 @@
+#include <QMessageBox>
 #include "settings.h"
 
 settings::settings(QWidget* parent)
-  : QDialog(parent) {
+  : QDialog(parent, Qt::WindowTitleHint | Qt::WindowSystemMenuHint |
+            Qt::WindowCloseButtonHint) {
   ui.setupUi(this);
   connect(ui.pushButton_save, SIGNAL(clicked()), this, SLOT(accept()));
   connect(ui.pushButton_cancel, SIGNAL(clicked()), this, SLOT(reject()));
@@ -11,28 +13,28 @@ settings::~settings() {
 
 }
 
-std::string settings::GetIPAddress() const {
-  return (ui.lineEdit_IPAddress->text()).toStdString();
+QString settings::GetIPAddress() const {
+  return ui.lineEdit_IPAddress->text();
 }
 
-std::string settings::GetPort1() const {
-  return (ui.lineEdit_port1->text()).toStdString();
+QString settings::GetPort1() const {
+  return ui.lineEdit_port1->text();
 }
 
-std::string settings::GetPort2() const {
-  return (ui.lineEdit_port2->text()).toStdString();
+QString settings::GetPort2() const {
+  return ui.lineEdit_port2->text();
 }
 
-void settings::SetIPAddress(std::string IP_address) {
-  ui.lineEdit_IPAddress->setText(QString::fromStdString(IP_address));
+void settings::SetIPAddress(const QString& IP_address) {
+  ui.lineEdit_IPAddress->setText(IP_address);
 }
 
-void settings::SetPort1(std::string port1) {
-  ui.lineEdit_port1->setText(QString::fromStdString(port1));
+void settings::SetPort1(const QString& port1) {
+  ui.lineEdit_port1->setText(port1);
 }
 
-void settings::SetPort2(std::string port2) {
-  ui.lineEdit_port2->setText(QString::fromStdString(port2));
+void settings::SetPort2(const QString& port2) {
+  ui.lineEdit_port2->setText(port2);
 }
 
 /*QTextCodec* codec = QTextCodec::codecForName("cp866");

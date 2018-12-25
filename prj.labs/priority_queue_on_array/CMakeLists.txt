@@ -1,0 +1,3 @@
+add_executable(priority_queue_on_array priority_queue_on_array.cpp 
+priority_queue_on_array.h priority_queue_on_array_test.cpp)
+set_property(TARGET priority_queue_on_array PROPERTY CXX_STANDARD 14)

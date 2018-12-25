@@ -7,6 +7,7 @@
 #include <QThread>
 #include <zmq.hpp>
 #include "ui_mainwindow.h"
+#include "receiver.h"
 
 class mainwindow : public QMainWindow {
   Q_OBJECT
@@ -16,25 +17,27 @@ class mainwindow : public QMainWindow {
   ~mainwindow();
 
  public slots:
+  void DownloadSettings();
   void SetSettings();
+  void SaveSettings();
   void EnterChat();
-  void Send();
-  void Exit();
-  void Save();
+  void SendLetter();
+  void LeaveChat();
+  void GetResult(const char* result);
 
  signals:
-  void StartReceive(QTextEdit* text_edit, std::string* IP_address,
-                    std::string* port_pub, std::string* head_letter);
+  void StartReceive(const QString& IP_address,
+                    const QString& port_pub, const QString& head_letter);
 
  private:
   Ui::MainWindow ui;
-  std::string IP_address_{ "" };
-  std::string port_pub_{ "" };
-  std::string port_rec_{ "" };
-  std::string name_{ "" };
-  std::string head_letter_{ "" };
+  QString IP_address_{ "" };
+  QString port_pub_{ "" };
+  QString port_rec_{ "" };
+  QString name_{ "" };
+  QString head_letter_{ "" };
   zmq::context_t context_{ 1 };
-  zmq::socket_t sender_{ context_, ZMQ_DEALER };
+  zmq::socket_t sender_{ context_, ZMQ_REQ };
   QThread thread_;
 };
 

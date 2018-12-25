@@ -12,12 +12,12 @@ class settings : public QDialog {
  public:
   settings(QWidget* parent = 0);
   ~settings();
-  std::string GetIPAddress() const;
-  std::string GetPort1() const;
-  std::string GetPort2() const;
-  void SetIPAddress(std::string IP_address);
-  void SetPort1(std::string port1);
-  void SetPort2(std::string port2);
+  QString GetIPAddress() const;
+  QString GetPort1() const;
+  QString GetPort2() const;
+  void SetIPAddress(const QString& IP_address);
+  void SetPort1(const QString& port1);
+  void SetPort2(const QString& port2);
 
  private:
   Ui::Dialog ui;
