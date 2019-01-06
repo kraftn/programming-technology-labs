@@ -11,43 +11,23 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Network chat</string>
+   <string>Сетевой чат</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
+    <item row="1" column="1">
+     <widget class="QPushButton" name="pushButton_come_in">
+      <property name="text">
+       <string>Вход</string>
+      </property>
+     </widget>
+    </item>
     <item row="4" column="0">
      <widget class="QLabel" name="label_3">
       <property name="text">
        <string>Введите Ваше сообщение:</string>
       </property>
      </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QPushButton" name="pushButton_comeIn">
-      <property name="text">
-       <string>Вход</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>Чат:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0" colspan="2">
-     <widget class="QTextEdit" name="textEdit_message">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLineEdit" name="lineEdit_enterName"/>
     </item>
     <item row="5" column="2">
      <widget class="QPushButton" name="pushButton_send">
@@ -85,8 +65,34 @@
       </property>
      </widget>
     </item>
+    <item row="1" column="0">
+     <widget class="QLineEdit" name="lineEdit_enter_name"/>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QTextEdit" name="textEdit_message">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="3">
+     <widget class="QLabel" name="label_name_chat">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
     <item row="3" column="0" colspan="3">
      <widget class="QTextEdit" name="textEdit_chat">
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustIgnored</enum>
+      </property>
       <property name="readOnly">
        <bool>true</bool>
       </property>
