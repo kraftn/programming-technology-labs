@@ -17,7 +17,13 @@ Client::Client(QWidget* parent)
   connect(ui.pushButton_come_in, SIGNAL(clicked()), this, SLOT(EnterChat()));
   connect(ui.pushButton_send, SIGNAL(clicked()), this, SLOT(SendLetter()));
   connect(ui.pushButton_exit, SIGNAL(clicked()), this, SLOT(LeaveChat()));
+  
   stop_subscribe.bind("inproc://stopsubscribe");
+  int32_t option_linger(0);
+  request_.setsockopt(ZMQ_LINGER, &option_linger, sizeof(option_linger));
+  int32_t option_relaxed(1);
+  request_.setsockopt(ZMQ_REQ_RELAXED, &option_relaxed, sizeof(option_relaxed));
+  sender_.setsockopt(ZMQ_LINGER, &option_linger, sizeof(option_linger));
 }
 
 
@@ -31,14 +37,21 @@ Client::~Client() {
 
 
 void Client::DownloadSettings() {
-  QString path = QFileDialog::getOpenFileName(nullptr, "Загрузить настройки", QString(),
+  QString path = QFileDialog::getOpenFileName(this, "Загрузить настройки", QString(),
                                               "*.ini");
   if (!path.isNull()) {
     QSettings settings(path, QSettings::IniFormat);
     IP_address_ = settings.value("setting/IP_address").toString().toStdString();
     port_reply_ = settings.value("setting/port_reply").toString().toStdString();
     name_chat_ = settings.value("setting/name_chat").toString().toStdString();
-    ui.label_name_chat->setText(QString::fromStdString(name_chat_));
+    if (IP_address_.empty() || port_reply_.empty() || name_chat_.empty()) {
+      QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+      IP_address_ = "";
+      port_reply_ = "";
+      name_chat_ = "";
+    } else {
+      ui.label_name_chat->setText(QString::fromStdString(name_chat_));
+    }
   }
 }
 
@@ -57,7 +70,7 @@ void Client::SetSettings() {
 
 
 void Client::SaveSettings() {
-  QString path = QFileDialog::getSaveFileName(nullptr, "Сохранить настройки", QString(),
+  QString path = QFileDialog::getSaveFileName(this, "Сохранить настройки", QString(),
                                               "*.ini");
   if (!path.isNull()) {
     QSettings settings(path, QSettings::IniFormat);
@@ -74,20 +87,16 @@ void Client::EnterChat() {
   name_ = ui.lineEdit_enter_name->text();
 
   if (IP_address_.empty()) {
-    QMessageBox::information(nullptr, "Ошибка", "Выберите сервер в настройках.");
+    QMessageBox::information(this, "Ошибка", "Выберите сервер в настройках.");
     return;
   }
   if (name_.isEmpty()) {
-    QMessageBox::information(nullptr, "Ошибка", "Введите Ваше имя. Оно не должно быть пустым.");
+    QMessageBox::information(this, "Ошибка", "Введите Ваше имя. Оно не должно быть пустым.");
     return;
   }
 
   std::string endpoint_reply("tcp://" + IP_address_ + ":" + port_reply_);
   request_.connect(endpoint_reply);
-  int32_t option_linger(0);
-  request_.setsockopt(ZMQ_LINGER, &option_linger, sizeof(option_linger));
-  int32_t option_relaxed(1);
-  request_.setsockopt(ZMQ_REQ_RELAXED, &option_relaxed, sizeof(option_relaxed));
 
   zmq::pollitem_t pollin;
   pollin.socket = static_cast<void*>(request_);
@@ -105,26 +114,24 @@ void Client::EnterChat() {
 
   QString port_publisher("");
   if (0 == pollin.revents) {
-    QMessageBox::information(nullptr, "Ошибка", "Проблемы с подключением к серверу.");
+    QMessageBox::information(this, "Ошибка", "Проблемы с подключением к серверу.");
     request_.disconnect(endpoint_reply);
     return;
   }
-  else {
-    zmq::message_t incoming;
-    request_.recv(&incoming);
-    std::string incoming_text(reinterpret_cast<char*>(incoming.data()));
-    if ('0' == incoming_text[0]) {
-      QMessageBox::information(nullptr, "Ошибка",
-                               "Участник чата с таким именем уже существует. Введите другое имя.");
-      request_.disconnect(endpoint_reply);
-      return;
-    }
-    else {
-      port_receiver_ = incoming_text.substr(2, incoming_text.find_last_of(' ') - 2);
-      port_publisher = QString::fromStdString(incoming_text.substr(incoming_text.find_last_of(' ') + 1, 
-        incoming_text.length() - incoming_text.find_last_of(' ') - 1));
-    }
+  
+  zmq::message_t incoming;
+  request_.recv(&incoming);
+  std::string incoming_text(reinterpret_cast<char*>(incoming.data()));
+  if ('0' == incoming_text[0]) {
+    QMessageBox::information(this, "Ошибка",
+                              "Участник чата с таким именем уже существует. Введите другое имя.");
+    request_.disconnect(endpoint_reply);
+    return;
   }
+  
+  port_receiver_ = incoming_text.substr(2, incoming_text.find_last_of(' ') - 2);
+  port_publisher = QString::fromStdString(incoming_text.substr(incoming_text.find_last_of(' ') + 1, 
+    incoming_text.length() - incoming_text.find_last_of(' ') - 1));
 
   ui.pushButton_send->setEnabled(true);
   ui.pushButton_exit->setEnabled(true);
@@ -135,7 +142,6 @@ void Client::EnterChat() {
 
   std::string endpoint_receiver = "tcp://" + IP_address_ + ":" + port_receiver_;
   sender_.connect(endpoint_receiver);
-  sender_.setsockopt(ZMQ_LINGER, &option_linger, sizeof(option_linger));
 
   Subscriber* receiver = new Subscriber();
   receiver->moveToThread(&thread_);
@@ -212,7 +218,7 @@ void Client::LeaveChat() {
 
 void Client::GetResult(const char* result) {
   if (0 == strcmp(result, "0")) {
-    QMessageBox::information(nullptr, "Сообщение", "Сервер больше не работает.");
+    QMessageBox::information(this, "Сообщение", "Сервер больше не работает.");
     LeaveChat();
   }
   else {

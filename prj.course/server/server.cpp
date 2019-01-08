@@ -1,7 +1,8 @@
-﻿#include "server.h"
+#include "server.h"
 #include "forwarder.h"
 
 #include <cstddef>
+#include <stdexcept>
 #include <QNetWorkInterface>
 #include <QNetworkAddressEntry>
 #include <QAbstractSocket>
@@ -29,12 +30,28 @@ Server::~Server() {
 
 void Server::Start() {
   if (-1 == ui.comboBox->currentIndex()) {
-    QMessageBox::information(nullptr, "Ошибка", "Выберите IP-адрес.");
+    QMessageBox::information(this, "Ошибка",
+                             "Выберите IP-адрес интерфейса.");
     return;
   }
 
   if (ui.lineEdit->text().isEmpty()) {
-    QMessageBox::information(nullptr, "Ошибка", "Введите название чата. Оно не должно быть пустым.");
+    QMessageBox::information(this, "Ошибка",
+                             "Введите название чата. Оно не должно быть пустым.");
+    return;
+  }
+
+  QString IP_address(IP_addresses_[ui.comboBox->currentIndex()]);
+  QString name_chat(ui.lineEdit->text());
+
+  try {
+    zmq::context_t context(1);
+    zmq::socket_t beacon(context, ZMQ_PUB);
+    beacon.bind("tcp://" + IP_address.toStdString() + ":70000");
+  }
+  catch (const std::exception& exception) {
+    QMessageBox::information(this, "Ошибка",
+                             "Нельзя запустить на одном интерфейсе больше одного сервера.");
     return;
   }
 
@@ -43,9 +60,6 @@ void Server::Start() {
   ui.lineEdit->setEnabled(false);
   ui.pushButton_start->setEnabled(false);
   ui.pushButton_stop->setEnabled(true);
-
-  QString IP_address(IP_addresses_[ui.comboBox->currentIndex()]);
-  QString name_chat(ui.lineEdit->text());
 
   Forwarder* forwarder = new Forwarder();
   forwarder->moveToThread(&thread_);
@@ -80,19 +94,23 @@ void Server::Update() {
   ui.comboBox->clear();
 
   QList<QNetworkInterface> interfaces = QNetworkInterface::allInterfaces();
-  for (ptrdiff_t i_interfaces(0); i_interfaces < interfaces.size(); i_interfaces += 1) {
+  for (ptrdiff_t i_interfaces(0); i_interfaces < interfaces.size();
+       i_interfaces += 1) {
     if (interfaces[i_interfaces].flags().testFlag(QNetworkInterface::IsRunning)) {
       QList<QNetworkAddressEntry> entries = interfaces[i_interfaces].addressEntries();
       for (ptrdiff_t i_entries(0); i_entries < entries.size(); i_entries += 1) {
-        if (entries[i_entries].ip().protocol() == QAbstractSocket::IPv4Protocol && !entries[i_entries].ip().isLoopback()) {
+        if (entries[i_entries].ip().protocol() == QAbstractSocket::IPv4Protocol
+            && !entries[i_entries].ip().isLoopback()) {
           IP_addresses_.push_back(entries[i_entries].ip().toString());
-          ui.comboBox->addItem(entries[i_entries].ip().toString() + " / " + entries[i_entries].netmask().toString());
+          ui.comboBox->addItem(entries[i_entries].ip().toString() + " / " +
+                               entries[i_entries].netmask().toString());
         }
       }
     }
   }
 
   if (IP_addresses_.empty()) {
-    QMessageBox::information(nullptr, "Ошибка", "Подходящие IP-адреса не были найдены.");
+    QMessageBox::information(this, "Ошибка",
+                             "Подходящие интерфейсы не были найдены.");
   }
 }

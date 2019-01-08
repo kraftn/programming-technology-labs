@@ -19,9 +19,9 @@ void Forwarder::StartForward(const QString& IP_address, const QString& name_chat
   receiver.bind(endpoint_set);
 
   zmq::socket_t publisher(context, ZMQ_PUB);
-  publisher.bind(endpoint_set);
   int32_t option(1);
   publisher.setsockopt(ZMQ_INVERT_MATCHING, &option, sizeof(option));
+  publisher.bind(endpoint_set);
 
   char endpoint_get[50]("");
   size_t size_endpoint = sizeof(endpoint_get);

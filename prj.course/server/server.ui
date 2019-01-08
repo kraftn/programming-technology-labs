@@ -24,7 +24,7 @@
        </sizepolicy>
       </property>
       <property name="text">
-       <string>Выберите IP-адрес для запуска сервера:</string>
+       <string>Выберите IP-адрес интерфейса для запуска сервера:</string>
       </property>
      </widget>
     </item>

@@ -51,12 +51,13 @@ Settings::Settings(QWidget* parent)
 
 void Settings::Scan() {
   if (-1 == ui.comboBox_networks->currentIndex()) {
-    QMessageBox::information(nullptr, "Ошибка", "Выберите IP-адрес сети.");
+    QMessageBox::information(this, "Ошибка", "Выберите IP-адрес сети.");
     return;
   }
 
   zmq::context_t context(1);
   zmq::socket_t scanner(context, ZMQ_SUB);
+  scanner.setsockopt(ZMQ_SUBSCRIBE, "", 0);
   
   int32_t amount(0);
   quint32 netmask(netmasks_[ui.comboBox_networks->currentIndex()]);
@@ -70,8 +71,6 @@ void Settings::Scan() {
     std::string endpoint("tcp://" + QHostAddress(network).toString().toStdString() + ":70000");
     scanner.connect(endpoint);
   }
-
-  scanner.setsockopt(ZMQ_SUBSCRIBE, "", 0);
 
   zmq::pollitem_t pollin;
   pollin.socket = static_cast<void*>(scanner);
@@ -105,7 +104,7 @@ void Settings::Scan() {
   statusbar.clearMessage();
 
   if (IP_addresses_.empty()) {
-    QMessageBox::information(nullptr, "Ошибка", "Ни один сервер не был найден.");
+    QMessageBox::information(this, "Результат", "Ни один сервер не был найден.");
   }
 }
 

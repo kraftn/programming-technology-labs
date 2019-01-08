@@ -7,14 +7,13 @@ void Subscriber::StartReceive(const QString& IP_address, const QString& port_pub
   zmq::context_t context(1);
 
   zmq::socket_t subscriber(context, ZMQ_SUB);
-
-  QString endpoint("tcp://" + IP_address + ":" + port_publisher);
-  subscriber.connect(endpoint.toStdString());
-
   int32_t option(1);
   subscriber.setsockopt(ZMQ_INVERT_MATCHING, &option, sizeof(option));
   subscriber.setsockopt(ZMQ_SUBSCRIBE, head_letter.toStdString().c_str(),
     head_letter.toStdString().length());
+
+  QString endpoint("tcp://" + IP_address + ":" + port_publisher);
+  subscriber.connect(endpoint.toStdString());
 
   zmq::socket_t stop_subscribe(*context_inproc, ZMQ_DEALER);
   stop_subscribe.connect("inproc://stopsubscribe");
