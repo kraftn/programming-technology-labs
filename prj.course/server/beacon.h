@@ -1,19 +1,23 @@
-#ifndef BEACON_H 
+#ifndef BEACON_H
 #define BEACON_H
 
 #include <QObject>
 #include <QString>
 #include <zmq.hpp>
 
+// Класс для постоянной отправки сообщений для обнаружения программы-сервера
+// программами-клиентами
 class Beacon: public QObject {
-Q_OBJECT
+  Q_OBJECT
 
-public:
-  Beacon() {};
-  ~Beacon() {};
+ public:
+  Beacon() {}
+  ~Beacon() {}
 
-  public slots:
-  void StartBlink(const QString& IP_address, const QString& port_reply, const QString& name_chat, zmq::context_t* context_inproc);
+ public slots:
+  // Получение данных из главного потока и начало рассылки сообщений
+  void StartBlink(const QString& IP_address, const QString& port_reply,
+                  const QString& name_chat, zmq::context_t* context_inproc);
 };
 
-#endif 
+#endif

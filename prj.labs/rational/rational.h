@@ -32,8 +32,6 @@ class Rational {
   }
   std::ostream& writeTo(std::ostream& ostrm) const;
   std::istream& readFrom(std::istream& istrm);
-  int32_t nod(int32_t num1, int32_t num2);
-  int32_t nok(int32_t num1, int32_t num2);
   void tryReduce();
 
  private:
@@ -49,6 +47,14 @@ Rational operator+(const Rational& lhs, const Rational& rhs);
 Rational operator-(const Rational& lhs, const Rational& rhs);
 Rational operator*(const Rational& lhs, const Rational& rhs);
 Rational operator/(const Rational& lhs, const Rational& rhs);
+Rational operator+(const Rational& lhs, const int32_t rhs);
+Rational operator-(const Rational& lhs, const int32_t rhs);
+Rational operator*(const Rational& lhs, const int32_t rhs);
+Rational operator/(const Rational& lhs, const int32_t rhs);
+Rational operator+(const int32_t lhs, const Rational& rhs);
+Rational operator-(const int32_t lhs, const Rational& rhs);
+Rational operator*(const int32_t lhs, const Rational& rhs);
+Rational operator/(const int32_t lhs, const Rational& rhs);
 
 inline std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs) {
   return rhs.writeTo(ostrm);
@@ -57,5 +63,8 @@ inline std::ostream& operator<<(std::ostream& ostrm, const Rational& rhs) {
 inline std::istream& operator>>(std::istream& istrm, Rational& rhs) {
   return rhs.readFrom(istrm);
 }
+
+int32_t nod(int32_t num1, int32_t num2);
+int32_t nok(int32_t num1, int32_t num2);
 
 #endif

@@ -1,13 +1,14 @@
-#include "forwarder.h"
-#include "beacon.h"
-
-#include <string>
 #include <cstring>
 #include <cstdint>
+#include <string>
 #include <list>
 #include <algorithm>
 
-void Forwarder::StartForward(const QString& IP_address, const QString& name_chat, zmq::context_t* context_inproc) {
+#include "forwarder.h"
+#include "beacon.h"
+
+void Forwarder::StartForward(const QString& IP_address,
+                             const QString& name_chat, zmq::context_t* context_inproc) {
   zmq::context_t context(1);
 
   std::string endpoint_set("tcp://" + IP_address.toStdString() + ":*");
@@ -36,7 +37,8 @@ void Forwarder::StartForward(const QString& IP_address, const QString& name_chat
   stop_blink_.bind("inproc://stopblink");
 
   thread_.start();
-  emit StartBlink(IP_address, QString::fromStdString(port_reply), name_chat, &context_inproc_);
+  emit StartBlink(IP_address, QString::fromStdString(port_reply), name_chat,
+                  &context_inproc_);
 
   strcpy(endpoint_get, "");
   receiver.getsockopt(ZMQ_LAST_ENDPOINT, endpoint_get, &size_endpoint);
@@ -61,7 +63,7 @@ void Forwarder::StartForward(const QString& IP_address, const QString& name_chat
   pollin[2].revents = 0;
 
   std::list<std::string> names;
-  
+
   while (0 == pollin[2].revents) {
     zmq::poll(pollin, 3);
 
@@ -75,21 +77,19 @@ void Forwarder::StartForward(const QString& IP_address, const QString& name_chat
         names.remove(name);
         zmq::message_t outgoing(1);
         reply.send(outgoing);
-      }
-      else {
+      } else {
         auto i_names = std::find(names.begin(), names.end(), name);
         if (i_names != names.end()) {
           zmq::message_t outgoing(2);
           memcpy(outgoing.data(), "0", 2);
           reply.send(outgoing);
-        }
-        else {
+        } else {
           names.push_back(name);
 
           std::string text_outgoing = "1 " + port_receiver + " " + port_publisher;
           zmq::message_t outgoing(text_outgoing.length() + 1);
           memcpy(outgoing.data(), text_outgoing.c_str(),
-            text_outgoing.length() + 1);
+                 text_outgoing.length() + 1);
           reply.send(outgoing);
         }
       }

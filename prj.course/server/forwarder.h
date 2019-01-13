@@ -6,23 +6,34 @@
 #include <QThread>
 #include <zmq.hpp>
 
-class Forwarder: public QObject { 
- Q_OBJECT
+// Класс для приёма заявок от программ-клиентов на подключение к чату
+// и пересылки сообщений от одного клиента всем остальным
+class Forwarder: public QObject {
+  Q_OBJECT
 
  public:
-  Forwarder() {};
+  Forwarder() {}
   ~Forwarder();
 
  public slots:
-  void StartForward(const QString& IP_address, const QString& name_chat, zmq::context_t* context_inproc);
+  // Получение данных из главного потока и начало приёма заявок на подключение
+  // и пересылки сообщений
+  void StartForward(const QString& IP_address, const QString& name_chat,
+                    zmq::context_t* context_inproc);
 
  signals:
-  void StartBlink(const QString& IP_address, const QString& port_reply, const QString& name_chat, zmq::context_t* context_inproc);
+  // Передача данных в побочный поток и начало рассылки сообщений с целью
+  // нахождения сервера клиентами
+  void StartBlink(const QString& IP_address, const QString& port_reply,
+                  const QString& name_chat, zmq::context_t* context_inproc);
 
  private:
-   QThread thread_;
-   zmq::context_t context_inproc_{ 0 };
-   zmq::socket_t stop_blink_{ context_inproc_, ZMQ_DEALER };
+  // Поток для широковещания
+  QThread thread_;
+  // Контекст для создания сокетов
+  zmq::context_t context_inproc_{ 0 };
+  // Сокет для остановки работы побочного потока
+  zmq::socket_t stop_blink_{ context_inproc_, ZMQ_DEALER };
 };
 
 #endif

@@ -44,8 +44,8 @@ int main() {
   z.Push(15);
   std::cout << "Stack z is " << z << std::endl;
 
-  x = y = z;
-  std::cout << "Stack x after x=y=z is " << x << std::endl;
+  (x = y) = z;
+  std::cout << "Stack x after (x=y)=z is " << x << std::endl;
 
   x = x;
   std::cout << "Stack x after x=x is " << x << std::endl;

@@ -7,12 +7,11 @@ Rational::Rational(const int32_t numerator)
 
 
 
-Rational::Rational(const int32_t numerator, const int32_t denominator) {
+Rational::Rational(const int32_t numerator, const int32_t denominator) 
+  : num_(numerator), denom_(denominator) {
   if (0 == denominator) {
     throw std::invalid_argument("Zero denumenator in Rational");
   }
-  num_ = numerator;
-  denom_ = denominator;
   if (denom_ < 0) {
     denom_ *= -1;
     num_ *= -1;
@@ -55,6 +54,18 @@ Rational operator+(const Rational& lhs, const Rational& rhs) {
 
 
 
+Rational operator+(const Rational& lhs, const int32_t rhs) {
+  return operator+(lhs, Rational(rhs));
+}
+
+
+
+Rational operator+(const int32_t lhs, const Rational& rhs) {
+  return operator+(Rational(lhs), rhs);
+}
+
+
+
 Rational& Rational::operator-=(const Rational& rhs) {
   num_ = (rhs.denom_ * num_ - denom_ * rhs.num_) / nod(denom_, rhs.denom_);
   denom_ = nok(denom_, rhs.denom_);
@@ -68,6 +79,18 @@ Rational operator-(const Rational& lhs, const Rational& rhs) {
   Rational dif(lhs);
   dif -= rhs;
   return dif;
+}
+
+
+
+Rational operator-(const Rational& lhs, const int32_t rhs) {
+  return operator-(lhs, Rational(rhs));
+}
+
+
+
+Rational operator-(const int32_t lhs, const Rational& rhs) {
+  return operator-(Rational(lhs), rhs);
 }
 
 
@@ -89,6 +112,18 @@ Rational operator*(const Rational& lhs, const Rational& rhs) {
 
 
 
+Rational operator*(const Rational& lhs, const int32_t rhs) {
+  return operator*(lhs, Rational(rhs));
+}
+
+
+
+Rational operator*(const int32_t lhs, const Rational& rhs) {
+  return operator*(Rational(lhs), rhs);
+}
+
+
+
 Rational& Rational::operator/=(const Rational& rhs) {
   num_ *= rhs.denom_;
   denom_ *= rhs.num_;
@@ -106,6 +141,18 @@ Rational operator/(const Rational& lhs, const Rational& rhs) {
   Rational quot(lhs);
   quot /= rhs;
   return quot;
+}
+
+
+
+Rational operator/(const Rational& lhs, const int32_t rhs) {
+  return operator/(lhs, Rational(rhs));
+}
+
+
+
+Rational operator/(const int32_t lhs, const Rational& rhs) {
+  return operator/(Rational(lhs), rhs);
 }
 
 
@@ -146,7 +193,7 @@ std::istream& Rational::readFrom(std::istream& istrm) {
 
 
 
-int32_t Rational::nod(int32_t num1, int32_t num2) {
+int32_t nod(int32_t num1, int32_t num2) {
   if (num2 > num1) {
     int32_t z = num1;
     num1 = num2;
@@ -163,7 +210,7 @@ int32_t Rational::nod(int32_t num1, int32_t num2) {
 
 
 
-int32_t Rational::nok(int32_t num1, int32_t num2) {
+int32_t nok(int32_t num1, int32_t num2) {
   return num1 * num2 / nod(num1, num2);
 }
 

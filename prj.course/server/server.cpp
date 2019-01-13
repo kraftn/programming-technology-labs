@@ -1,6 +1,3 @@
-#include "server.h"
-#include "forwarder.h"
-
 #include <cstddef>
 #include <stdexcept>
 #include <QNetWorkInterface>
@@ -8,6 +5,9 @@
 #include <QAbstractSocket>
 #include <QList>
 #include <QMessageBox>
+
+#include "server.h"
+#include "forwarder.h"
 
 Server::Server(QWidget* parent)
   : QMainWindow(parent) {
@@ -47,7 +47,7 @@ void Server::Start() {
   try {
     zmq::context_t context(1);
     zmq::socket_t beacon(context, ZMQ_PUB);
-    beacon.bind("tcp://" + IP_address.toStdString() + ":70000");
+    beacon.bind("tcp://" + IP_address.toStdString() + ":60000");
   }
   catch (const std::exception& exception) {
     QMessageBox::information(this, "Ошибка",

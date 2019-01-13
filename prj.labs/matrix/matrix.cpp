@@ -2,33 +2,27 @@
 
 #include "matrix.h"
 
-Matrix::Matrix(const int32_t size1, const int32_t size2) {
-  if (size1 <= 0 || size2 <= 0) {
-    throw std::invalid_argument("Negative or null size in Matrix");
-  }
-  size1_ = size1;
-  size2_ = size2;
-  data_ = new int* [size1_];
-  for (int i = 0; i < size1_; i++) {
-    data_[i] = new int[size2_] {0};
+Matrix::Matrix(const int32_t number_rows, const int32_t number_columns)
+  : number_rows_(number_rows), number_columns_(number_columns),
+    data_(new int32_t* [number_rows]) {
+  for (ptrdiff_t i_rows(0); i_rows < number_rows; i_rows += 1) {
+    data_[i_rows] = new int32_t[number_columns] { 0 };
   }
 }
 
 
 
-Matrix::Matrix(const Matrix& obj) {
-  if (obj.data_ == nullptr) {
-    throw std::invalid_argument("Empty Matrix in constructor");
+Matrix::Matrix(const Matrix& obj)
+  : number_rows_(obj.number_rows_), number_columns_(obj.number_columns_),
+    data_(new int32_t* [obj.number_rows_]) {
+  for (ptrdiff_t i_rows(0); i_rows < obj.number_rows_; i_rows += 1) {
+    data_[i_rows] = new int32_t[obj.number_columns_] { 0 };
   }
-  size1_ = obj.size1_;
-  size2_ = obj.size2_;
-  data_ = new int* [size1_];
-  for (int i = 0; i < size1_; i++) {
-    data_[i] = new int[size2_] {0};
-  }
-  for (int i = 0; i < size1_; i++) {
-    for (int j = 0; j < size2_; j++) {
-      data_[i][j] = obj.data_[i][j];
+
+  for (ptrdiff_t i_rows(0); i_rows < obj.number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < obj.number_columns_;
+        i_columns += 1) {
+      data_[i_rows][i_columns] = obj.data_[i_rows][i_columns];
     }
   }
 }
@@ -36,19 +30,15 @@ Matrix::Matrix(const Matrix& obj) {
 
 
 Matrix& Matrix::operator=(const Matrix& obj) {
-  if (data_ == nullptr) {
-    throw std::invalid_argument("Left Matrix in empty");
-  }
-  if (obj.data_ == nullptr) {
-    throw std::invalid_argument("Right Matrix in empty");
-  }
-  if (size1_ != obj.size1_ || size2_ != obj.size2_) {
+  if (number_rows_ != obj.number_rows_
+      || number_columns_ != obj.number_columns_) {
     throw std::invalid_argument("Sizes of Matrix aren't equal");
   }
   if (this != &obj) {
-    for (int i = 0; i < size1_; i++) {
-      for (int j = 0; j < size2_; j++) {
-        data_[i][j] = obj.data_[i][j];
+    for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+      for (ptrdiff_t i_columns(0); i_columns < number_columns_;
+          i_columns += 1) {
+        data_[i_rows][i_columns] = obj.data_[i_rows][i_columns];
       }
     }
   }
@@ -58,32 +48,145 @@ Matrix& Matrix::operator=(const Matrix& obj) {
 
 
 Matrix::~Matrix() {
-  for (int i = 0; i++; i < size1_) {
-    delete[] data_[i];
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    delete[] data_[i_rows];
   }
   delete[] data_;
-  data_ = nullptr;
-  size1_ = 0;
-  size2_ = 0;
 }
 
 
 
-int Matrix::GetSize1()const {
-  return size1_;
+size_t Matrix::GetNumberRows() const {
+  return number_rows_;
 }
 
 
 
-int Matrix::GetSize2()const {
-  return size2_;
+size_t Matrix::GetNumberColumns() const {
+  return number_columns_;
 }
 
 
 
-int& Matrix::Value(const int i, const int j) {
-  if (i < 0 || i >= size1_ || j < 0 || j >= size2_) {
+int32_t& Matrix::Value(const ptrdiff_t row, const ptrdiff_t column) {
+  if (row < 0 || row >= number_rows_ || column < 0
+      || column >= number_columns_) {
     throw std::out_of_range("Index is out of range of Matrix");
   }
-  return data_[i][j];
+  return data_[row][column];
+}
+
+
+
+int32_t Matrix::Value(const ptrdiff_t row, const ptrdiff_t column) const {
+  if (row < 0 || row >= number_rows_ || column < 0
+      || column >= number_columns_) {
+    throw std::out_of_range("Index is out of range of Matrix");
+  }
+  return data_[row][column];
+}
+
+
+
+Matrix& Matrix::operator+=(const Matrix& rhs) {
+  if (number_rows_ != rhs.number_rows_
+      || number_columns_ != rhs.number_columns_) {
+    throw std::invalid_argument("Sizes of Matrix aren't equal");
+  }
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < number_columns_; i_columns += 1) {
+      data_[i_rows][i_columns] += rhs.data_[i_rows][i_columns];
+    }
+  }
+  return *this;
+}
+
+
+
+Matrix operator+(const Matrix& lhs, const Matrix& rhs) {
+  Matrix sum(lhs);
+  sum += rhs;
+  return sum;
+}
+
+
+
+Matrix& Matrix::operator-=(const Matrix& rhs) {
+  if (number_rows_ != rhs.number_rows_
+      || number_columns_ != rhs.number_columns_) {
+    throw std::invalid_argument("Sizes of Matrix aren't equal");
+  }
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < number_columns_; i_columns += 1) {
+      data_[i_rows][i_columns] -= rhs.data_[i_rows][i_columns];
+    }
+  }
+  return *this;
+}
+
+
+
+Matrix operator-(const Matrix& lhs, const Matrix& rhs) {
+  Matrix dif(lhs);
+  dif -= rhs;
+  return dif;
+}
+
+
+
+Matrix& Matrix::operator*=(const int32_t rhs) {
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < number_columns_; i_columns += 1) {
+      data_[i_rows][i_columns] *= rhs;
+    }
+  }
+  return *this;
+}
+
+
+
+Matrix operator*(const Matrix& lhs, const int32_t rhs) {
+  Matrix comp(lhs);
+  comp *= rhs;
+  return comp;
+}
+
+
+
+Matrix operator*(const int32_t lhs, const Matrix& rhs) {
+  Matrix comp(rhs);
+  comp *= lhs;
+  return comp;
+}
+
+
+
+Matrix Matrix::operator*(const Matrix& rhs) {
+  if (number_columns_ != rhs.number_rows_) {
+    throw std::invalid_argument("The number of columns of the first matrix isn't equal to the number of rows of the second matrix");
+  }
+  Matrix comp(number_rows_, rhs.number_columns_);
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < rhs.number_columns_;
+        i_columns += 1) {
+      for (ptrdiff_t i_equal_size(0); i_equal_size < number_columns_;
+           i_equal_size += 1) {
+        comp.data_[i_rows][i_columns] += data_[i_rows][i_equal_size] *
+                                         rhs.data_[i_equal_size][i_columns];
+      }
+    }
+  }
+  return comp;
+}
+
+
+
+std::ostream& Matrix::WriteTo(std::ostream& ostrm) const {
+  for (ptrdiff_t i_rows(0); i_rows < number_rows_; i_rows += 1) {
+    for (ptrdiff_t i_columns(0); i_columns < number_columns_; i_columns += 1) {
+      ostrm << data_[i_rows][i_columns] << ' ';
+    }
+    ostrm << '\n';
+  }
+  return ostrm;
 }

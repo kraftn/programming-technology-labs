@@ -32,9 +32,7 @@ class DynamicArrayT {
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const int32_t size)
   : logic_size_(size), real_size_(2 * logic_size_),
-    data_(new T[real_size_] {
-  0
-}) {
+    data_(new T[real_size_] {0}) {
 }
 
 
@@ -42,9 +40,7 @@ DynamicArrayT<T>::DynamicArrayT(const int32_t size)
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const DynamicArrayT<T>& obj)
   : logic_size_(obj.logic_size_), real_size_(2 * logic_size_),
-    data_(new T[real_size_] {
-  0
-}) {
+    data_(new T[real_size_] {0}) {
   for (ptrdiff_t i_data(0); i_data < obj.logic_size_; i_data += 1) {
     data_[i_data] = obj.data_[i_data];
   }

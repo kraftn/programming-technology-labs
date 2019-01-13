@@ -35,8 +35,8 @@ int main() {
   x = z;
   cout << "DynamicArray x after x=z is " << x << endl << endl;
 
-  x = z = y;
-  cout << "DynamicArray x after x=z=y is " << x << endl << endl;
+  (x = z) = y;
+  cout << "DynamicArray x after (x=z)=y is " << x << endl << endl;
 
   x = x;
   cout << "DynamicArray x after x=x is " << x << endl << endl;
@@ -117,8 +117,8 @@ int main() {
   cout << "DynamicArray x after x_new=z_new is " << x_new << endl
        << endl;
 
-  x_new = z_new = y_new;
-  cout << "DynamicArray x_new after x_new=z_new=y_new is " << x_new << endl <<
+  (x_new = z_new) = y_new;
+  cout << "DynamicArray x_new after (x_new=z_new)=y_new is " << x_new << endl <<
        endl;
 
   x_new = x_new;

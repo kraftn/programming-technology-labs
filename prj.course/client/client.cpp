@@ -1,7 +1,3 @@
-#include "client.h"
-#include "settings.h"
-#include "subscriber.h"
-
 #include <cstdint>
 #include <cstddef>
 #include <cstring>
@@ -10,16 +6,21 @@
 #include <QMessageBox>
 #include <QFileDialog>
 
+#include "client.h"
+#include "settings.h"
+#include "subscriber.h"
+
 Client::Client(QWidget* parent)
   : QMainWindow(parent) {
   ui.setupUi(this);
-  connect(ui.action_download, SIGNAL(triggered()), this, SLOT(DownloadSettings()));
+  connect(ui.action_download, SIGNAL(triggered()), this,
+          SLOT(DownloadSettings()));
   connect(ui.action_change, SIGNAL(triggered()), this, SLOT(SetSettings()));
   connect(ui.action_save, SIGNAL(triggered()), this, SLOT(SaveSettings()));
   connect(ui.pushButton_come_in, SIGNAL(clicked()), this, SLOT(EnterChat()));
   connect(ui.pushButton_send, SIGNAL(clicked()), this, SLOT(SendLetter()));
   connect(ui.pushButton_exit, SIGNAL(clicked()), this, SLOT(LeaveChat()));
-  
+
   stop_subscribe.bind("inproc://stopsubscribe");
   int32_t option_linger(0);
   request_.setsockopt(ZMQ_LINGER, &option_linger, sizeof(option_linger));
@@ -39,16 +40,18 @@ Client::~Client() {
 
 
 void Client::DownloadSettings() {
-  QString path = QFileDialog::getOpenFileName(this, "Загрузить настройки", QString(),
+  QString path = QFileDialog::getOpenFileName(this,
+                                              "Загрузить настройки", QString(),
                                               "*.ini");
   if (!path.isNull()) {
     QSettings settings(path, QSettings::IniFormat);
     IP_address_ = settings.value("setting/IP_address").toString().toStdString();
     port_reply_ = settings.value("setting/port_reply").toString().toStdString();
     name_chat_ = settings.value("setting/name_chat").toString().toStdString();
-    
+
     if (name_chat_.empty()) {
-      QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+      QMessageBox::information(this, "Ошибка",
+                               "Неверные данные в файле.");
       IP_address_ = "";
       port_reply_ = "";
       ui.label_name_chat->setText(QString::fromStdString(name_chat_));
@@ -63,7 +66,8 @@ void Client::DownloadSettings() {
       }
     }
     if (count_point != 3) {
-      QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+      QMessageBox::information(this, "Ошибка",
+                               "Неверные данные в файле.");
       IP_address_ = "";
       port_reply_ = "";
       name_chat_ = "";
@@ -71,11 +75,12 @@ void Client::DownloadSettings() {
       ui.action_save->setEnabled(false);
       return;
     }
-    
+
     try {
       int32_t port_reply(std::stoi(port_reply_));
       if (port_reply < 0) {
-        QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+        QMessageBox::information(this, "Ошибка",
+                                 "Неверные данные в файле.");
         IP_address_ = "";
         port_reply_ = "";
         name_chat_ = "";
@@ -89,7 +94,8 @@ void Client::DownloadSettings() {
       for (int32_t i(0); i < 3; i += 1) {
         part = std::stoi(cut_IP_address.substr(0, cut_IP_address.find_first_of('.')));
         if (part < 0 || part > 255) {
-          QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+          QMessageBox::information(this, "Ошибка",
+                                   "Неверные данные в файле.");
           IP_address_ = "";
           port_reply_ = "";
           name_chat_ = "";
@@ -101,7 +107,8 @@ void Client::DownloadSettings() {
       }
       part = std::stoi(cut_IP_address);
       if (part < 0 || part > 255) {
-        QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+        QMessageBox::information(this, "Ошибка",
+                                 "Неверные данные в файле.");
         IP_address_ = "";
         port_reply_ = "";
         name_chat_ = "";
@@ -111,7 +118,8 @@ void Client::DownloadSettings() {
       }
     }
     catch (const std::exception& exception) {
-      QMessageBox::information(this, "Ошибка", "Неверные данные в файле.");
+      QMessageBox::information(this, "Ошибка",
+                               "Неверные данные в файле.");
       IP_address_ = "";
       port_reply_ = "";
       name_chat_ = "";
@@ -128,7 +136,7 @@ void Client::DownloadSettings() {
 
 
 void Client::SetSettings() {
-  Settings w;
+  Settings w(this);
   if (QDialog::Accepted == w.exec()) {
     IP_address_ = w.GetIPAddress();
     port_reply_ = w.GetPortReply();
@@ -138,8 +146,7 @@ void Client::SetSettings() {
 
   if (!IP_address_.empty()) {
     ui.action_save->setEnabled(true);
-  }
-  else {
+  } else {
     ui.action_save->setEnabled(false);
   }
 }
@@ -147,7 +154,8 @@ void Client::SetSettings() {
 
 
 void Client::SaveSettings() {
-  QString path = QFileDialog::getSaveFileName(this, "Сохранить настройки", QString(),
+  QString path = QFileDialog::getSaveFileName(this,
+                                              "Сохранить настройки", QString(),
                                               "*.ini");
   if (!path.isNull()) {
     QSettings settings(path, QSettings::IniFormat);
@@ -164,11 +172,13 @@ void Client::EnterChat() {
   name_ = ui.lineEdit_enter_name->text();
 
   if (IP_address_.empty()) {
-    QMessageBox::information(this, "Ошибка", "Выберите сервер в настройках.");
+    QMessageBox::information(this, "Ошибка",
+                             "Выберите сервер в настройках.");
     return;
   }
   if (name_.isEmpty()) {
-    QMessageBox::information(this, "Ошибка", "Введите Ваше имя. Оно не должно быть пустым.");
+    QMessageBox::information(this, "Ошибка",
+                             "Введите Ваше имя. Оно не должно быть пустым.");
     return;
   }
 
@@ -182,32 +192,34 @@ void Client::EnterChat() {
   QString text_outgoing("1 " + name_);
   zmq::message_t outgoing(text_outgoing.toStdString().length() + 1);
   memcpy(outgoing.data(), text_outgoing.toStdString().c_str(),
-    text_outgoing.toStdString().length() + 1);
+         text_outgoing.toStdString().length() + 1);
   request_.send(outgoing, ZMQ_DONTWAIT);
-  
+
   ui.statusbar->showMessage("Подключение к серверу...");
   zmq::poll(&pollin, 1, 3000);
   ui.statusbar->clearMessage();
 
   QString port_publisher("");
   if (0 == pollin.revents) {
-    QMessageBox::information(this, "Ошибка", "Проблемы с подключением к серверу.");
+    QMessageBox::information(this, "Ошибка",
+                             "Проблемы с подключением к серверу.");
     request_.disconnect(endpoint_reply);
     return;
   }
-  
+
   zmq::message_t incoming;
   request_.recv(&incoming);
   std::string incoming_text(reinterpret_cast<char*>(incoming.data()));
   if ('0' == incoming_text[0]) {
     QMessageBox::information(this, "Ошибка",
-                              "Участник чата с таким именем уже существует. Введите другое имя.");
+                             "Участник чата с таким именем уже существует. Введите другое имя.");
     request_.disconnect(endpoint_reply);
     return;
   }
-  
+
   port_receiver_ = incoming_text.substr(2, incoming_text.find_last_of(' ') - 2);
-  port_publisher = QString::fromStdString(incoming_text.substr(incoming_text.find_last_of(' ') + 1, 
+  port_publisher = QString::fromStdString(incoming_text.substr(
+    incoming_text.find_last_of(' ') + 1,
     incoming_text.length() - incoming_text.find_last_of(' ') - 1));
 
   ui.pushButton_send->setEnabled(true);
@@ -227,14 +239,16 @@ void Client::EnterChat() {
   connect(&thread_, &QThread::finished, receiver, &QObject::deleteLater);
 
   thread_.start();
-  emit StartReceive(QString::fromStdString(IP_address_), port_publisher, name_ + ": ", &context_);
+  emit StartReceive(QString::fromStdString(IP_address_), port_publisher,
+                    name_ + ": ", &context_);
 
-  QString text_message(name_ + ": " + name_ + " присоединился к чату");
+  QString text_message(name_ + ": " + name_ +
+                       " присоединился к чату");
   ui.textEdit_chat->append(text_message);
 
   zmq::message_t message(text_message.toStdString().length() + 1);
   memcpy(message.data(), text_message.toStdString().c_str(),
-        text_message.toStdString().length() + 1);
+         text_message.toStdString().length() + 1);
   sender_.send(message, ZMQ_DONTWAIT);
 }
 
@@ -257,7 +271,8 @@ void Client::SendLetter() {
 
 
 void Client::LeaveChat() {
-  QString text_message(name_ + ": " + name_ + " отключился от чата");
+  QString text_message(name_ + ": " + name_ +
+                       " отключился от чата");
 
   zmq::message_t message_bye(text_message.toStdString().length() + 1);
   memcpy(message_bye.data(), text_message.toStdString().c_str(),
@@ -267,7 +282,7 @@ void Client::LeaveChat() {
   text_message = "0 " + name_;
   zmq::message_t message_name(text_message.toStdString().length() + 1);
   memcpy(message_name.data(), text_message.toStdString().c_str(),
-    text_message.toStdString().length() + 1);
+         text_message.toStdString().length() + 1);
   request_.send(message_name, ZMQ_DONTWAIT);
 
   zmq::message_t message_inproc(1);
@@ -295,10 +310,10 @@ void Client::LeaveChat() {
 
 void Client::GetResult(const char* result) {
   if (0 == strcmp(result, "0")) {
-    QMessageBox::information(this, "Сообщение", "Сервер больше не работает.");
+    QMessageBox::information(this, "Сообщение",
+                             "Сервер больше не работает.");
     LeaveChat();
-  }
-  else {
+  } else {
     ui.textEdit_chat->append(QString::fromUtf8(result));
   }
 }

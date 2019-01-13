@@ -18,6 +18,9 @@ bool testParse(const std::string& str) {
 int main() {
   using namespace std;
 
+  Rational default_ratioanal;
+  cout << "Create default rational: " << default_ratioanal << endl << endl;
+
   cout << "Create rational number 4/0: ";
   try {
     Rational x(4, 0);
@@ -66,6 +69,16 @@ int main() {
   cout << v << "*" << w << "=" << v* w << endl;
   cout << v << "/" << w << "=" << v / w << endl << endl;
 
+  cout << v << "+" << 2 << "=" << v + 2 << endl;
+  cout << v << "-" << 2 << "=" << v - 2 << endl;
+  cout << v << "*" << 2 << "=" << v * 2 << endl;
+  cout << v << "/" << 2 << "=" << v / 2 << endl << endl;
+
+  cout << 2 << "+" << w << "=" << 2 + w << endl;
+  cout << 2 << "-" << w << "=" << 2 - w << endl;
+  cout << 2 << "*" << w << "=" << 2 * w << endl;
+  cout << 2 << "/" << w << "=" << 2 / w << endl << endl;
+
   if (Rational(1, 3) == Rational(3, 9)) {
     cout << "(1/3)==(3/9)" << endl;
   }
@@ -75,6 +88,10 @@ int main() {
 
   y = Rational(5, 6);
   cout << "y after y=(5/6): " << y << endl;
+  (y = v) = w;
+  cout << "y after (y = v) = w: " << y << endl;
+  y = y;
+  cout << "y after y = y: " << y << endl;
 
   return 0;
 }

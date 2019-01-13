@@ -17,7 +17,7 @@
    <item row="7" column="0">
     <widget class="QPushButton" name="pushButton_save">
      <property name="text">
-      <string>Изменить</string>
+      <string>Подключиться</string>
      </property>
     </widget>
    </item>

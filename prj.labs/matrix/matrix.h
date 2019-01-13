@@ -2,22 +2,38 @@
 #define MATRIX_H
 
 #include <cstdint>
+#include <cstddef>
+#include <iostream>
 
 class Matrix {
  public:
   Matrix() {}
-  Matrix(const int32_t size1, const int32_t size2);
-  explicit Matrix(const Matrix& obj);
+  Matrix(const int32_t number_rows, const int32_t number_columns);
+  Matrix(const Matrix& obj);
   Matrix& operator=(const Matrix& obj);
   ~Matrix();
-  int GetSize1() const;
-  int GetSize2() const;
-  int& Value(const int i, const int j);
+  size_t GetNumberRows() const;
+  size_t GetNumberColumns() const;
+  int32_t& Value(const ptrdiff_t row, const ptrdiff_t column);
+  int32_t Value(const ptrdiff_t row, const ptrdiff_t column) const;
+  Matrix& operator+=(const Matrix& rhs);
+  Matrix& operator-=(const Matrix& rhs);
+  Matrix& operator*=(const int32_t rhs);
+  Matrix operator*(const Matrix& rhs);
+  std::ostream& WriteTo(std::ostream& ostrm) const;
 
  private:
+  int32_t number_rows_{ 0 };
+  int32_t number_columns_{ 0 };
   int32_t** data_{ nullptr };
-  int32_t size1_{ 0 };
-  int32_t size2_{ 0 };
 };
+
+Matrix operator+(const Matrix& lhs, const Matrix& rhs);
+Matrix operator-(const Matrix& lhs, const Matrix& rhs);
+Matrix operator*(const Matrix& lhs, const int32_t rhs);
+Matrix operator*(const int32_t lhs, const Matrix& rhs);
+inline std::ostream& operator<<(std::ostream& ostrm, const Matrix& rhs) {
+  return rhs.WriteTo(ostrm);
+}
 
 #endif

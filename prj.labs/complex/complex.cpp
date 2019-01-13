@@ -38,6 +38,18 @@ Complex operator+(const Complex& lhs, const Complex& rhs) {
 
 
 
+Complex operator+(const Complex& lhs, const double rhs) {
+  return operator+(lhs, Complex(rhs));
+}
+
+
+
+Complex operator+(const double lhs, const Complex& rhs) {
+  return operator+(Complex(lhs), rhs);
+}
+
+
+
 Complex& Complex::operator-=(const Complex& rhs) {
   re -= rhs.re;
   im -= rhs.im;
@@ -48,6 +60,18 @@ Complex& Complex::operator-=(const Complex& rhs) {
 
 Complex operator-(const Complex& lhs, const Complex& rhs) {
   return Complex(lhs.re - rhs.re, lhs.im - rhs.im);
+}
+
+
+
+Complex operator-(const Complex& lhs, const double rhs) {
+  return operator-(lhs, Complex(rhs));
+}
+
+
+
+Complex operator-(const double lhs, const Complex& rhs) {
+  return operator-(Complex(lhs), rhs);
 }
 
 
@@ -69,6 +93,18 @@ Complex operator*(const Complex& lhs, const Complex& rhs) {
 
 
 
+Complex operator*(const Complex& lhs, const double rhs) {
+  return operator*(lhs, Complex(rhs));
+}
+
+
+
+Complex operator*(const double lhs, const Complex& rhs) {
+  return operator*(Complex(lhs), rhs);
+}
+
+
+
 Complex& Complex::operator/=(const Complex& rhs) {
   *this *= Complex(rhs.re, -rhs.im);
   this->re /= (rhs.re * rhs.re + rhs.im * rhs.im);
@@ -82,6 +118,18 @@ Complex operator/ (const Complex& lhs, const Complex& rhs) {
   Complex quot(lhs);
   quot /= rhs;
   return quot;
+}
+
+
+
+Complex operator/(const Complex& lhs, const double rhs) {
+  return operator/(lhs, Complex(rhs));
+}
+
+
+
+Complex operator/(const double lhs, const Complex& rhs) {
+  return operator/(Complex(lhs), rhs);
 }
 
 

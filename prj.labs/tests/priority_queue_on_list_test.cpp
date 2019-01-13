@@ -45,8 +45,8 @@ int main() {
   z.Push(15, -3);
   std::cout << "Queue z is " << z << std::endl;
 
-  x = y = z;
-  std::cout << "Queue x after x=y=z is " << x << std::endl;
+  (x = y) = z;
+  std::cout << "Queue x after (x=y)=z is " << x << std::endl;
 
   x = x;
   std::cout << "Queue x after x=x is " << x << std::endl;
