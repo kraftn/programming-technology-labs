@@ -3,8 +3,11 @@
 #include "matrix.h"
 
 Matrix::Matrix(const int32_t number_rows, const int32_t number_columns)
-  : number_rows_(number_rows), number_columns_(number_columns),
-    data_(new int32_t* [number_rows]) {
+  : number_rows_(number_rows), number_columns_(number_columns) {
+  if (number_rows < 0 || number_columns < 0) {
+    throw std::invalid_argument("Negative sizes.");
+  }
+  data_ = new int32_t*[number_rows];
   for (ptrdiff_t i_rows(0); i_rows < number_rows; i_rows += 1) {
     data_[i_rows] = new int32_t[number_columns] { 0 };
   }
@@ -78,7 +81,7 @@ int32_t& Matrix::Value(const ptrdiff_t row, const ptrdiff_t column) {
 
 
 
-int32_t Matrix::Value(const ptrdiff_t row, const ptrdiff_t column) const {
+const int32_t& Matrix::Value(const ptrdiff_t row, const ptrdiff_t column) const {
   if (row < 0 || row >= number_rows_ || column < 0
       || column >= number_columns_) {
     throw std::out_of_range("Index is out of range of Matrix");

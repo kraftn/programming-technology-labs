@@ -84,6 +84,13 @@ int main() {
     cout << "Trying to set y[5] to 50 is failed" << endl;
   }
 
+  try {
+    DynamicArrayT<int>(-3);
+  }
+  catch (const invalid_argument& except) {
+    cout << "Trying to create DynamicArrayT<int>(-3) is failed" << endl;
+  }
+
   cout << "---------------------------------------------------------------"
        << endl;
 

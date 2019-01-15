@@ -15,7 +15,7 @@ class Matrix {
   size_t GetNumberRows() const;
   size_t GetNumberColumns() const;
   int32_t& Value(const ptrdiff_t row, const ptrdiff_t column);
-  int32_t Value(const ptrdiff_t row, const ptrdiff_t column) const;
+  const int32_t& Value(const ptrdiff_t row, const ptrdiff_t column) const;
   Matrix& operator+=(const Matrix& rhs);
   Matrix& operator-=(const Matrix& rhs);
   Matrix& operator*=(const int32_t rhs);

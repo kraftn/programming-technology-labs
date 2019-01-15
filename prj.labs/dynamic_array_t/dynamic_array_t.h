@@ -17,7 +17,7 @@ class DynamicArrayT {
     size_t Size() const;
     size_t Capacity() const;
     T& operator[](const ptrdiff_t number);
-    T operator[](const ptrdiff_t number) const;
+    const T& operator[](const ptrdiff_t number) const;
     void Resize(int32_t size);
     std::ostream& WriteTo(std::ostream& ostrm) const;
 
@@ -31,8 +31,11 @@ class DynamicArrayT {
 
 template <typename T>
 DynamicArrayT<T>::DynamicArrayT(const int32_t size)
-  : logic_size_(size), real_size_(2 * logic_size_),
-    data_(new T[real_size_] {0}) {
+  : logic_size_(size), real_size_(2 * logic_size_) {
+  if (size < 0) {
+    throw std::invalid_argument("Negative size.");
+  }
+  data_ = new T[real_size_]{ 0 };
 }
 
 
@@ -93,7 +96,7 @@ T& DynamicArrayT<T>::operator[](const ptrdiff_t number) {
 
 
 template<typename T>
-T DynamicArrayT<T>::operator[](const ptrdiff_t number) const {
+const T& DynamicArrayT<T>::operator[](const ptrdiff_t number) const {
   if (number < 0 || number >= logic_size_) {
     throw std::out_of_range("Index is out of range of DynamicArray.");
   }

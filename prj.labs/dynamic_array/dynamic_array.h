@@ -15,7 +15,7 @@ class DynamicArray {
   size_t Size() const;
   size_t Capacity() const;
   int32_t& operator[](const ptrdiff_t number);
-  int32_t operator[](const ptrdiff_t number) const;
+  const int32_t& operator[](const ptrdiff_t number) const;
   void Resize(int32_t size);
   std::ostream& WriteTo(std::ostream& ostrm) const;
 

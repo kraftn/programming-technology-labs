@@ -84,5 +84,12 @@ int main() {
     cout << "Trying to set y[5] to 50 is failed" << endl;
   }
 
+  try {
+    DynamicArray arr(-1);
+  }
+  catch (const invalid_argument& except) {
+    cout << "Trying to create DynamicArray arr(-1) is failed" << endl;
+  }
+
   return 0;
 }

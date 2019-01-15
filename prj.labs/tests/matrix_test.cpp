@@ -116,5 +116,11 @@ int main() {
   catch (const invalid_argument& except) {
     cout << "Matrix(2, 3) * Matrix(1, 2) is failed" << endl;
   }
+  try {
+    Matrix(2, -3);
+  }
+  catch (const invalid_argument& except) {
+    cout << "Create Matrix(2, -3) is failed" << endl;
+  }
   return 0;
 }

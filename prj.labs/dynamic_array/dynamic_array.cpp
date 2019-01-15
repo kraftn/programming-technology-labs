@@ -3,8 +3,11 @@
 #include "dynamic_array.h"
 
 DynamicArray::DynamicArray(const int32_t size)
-  : logic_size_(size), real_size_(2 * logic_size_),
-    data_(new int32_t[real_size_] {0}) {
+  : logic_size_(size), real_size_(2 * logic_size_) {
+  if (size < 0) {
+    throw std::invalid_argument("Negative size.");
+  }
+  data_ = new int32_t[real_size_]{ 0 };
 }
 
 
@@ -58,7 +61,7 @@ int32_t& DynamicArray::operator[](const ptrdiff_t number) {
 
 
 
-int32_t DynamicArray::operator[](const ptrdiff_t number) const {
+const int32_t& DynamicArray::operator[](const ptrdiff_t number) const {
   if (number < 0 || number >= logic_size_) {
     throw std::out_of_range("Index is out of range of DynamicArray.");
   }
